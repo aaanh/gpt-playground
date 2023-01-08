@@ -7,7 +7,6 @@ import { trpc } from "../utils/trpc";
 import { useState } from "react";
 
 const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
 
   const [inputPrompt, setInputPrompt] = useState("");
   const [result, setResult] = useState();
@@ -32,7 +31,7 @@ const Home: NextPage = () => {
       }
 
       setResult(data.result);
-      setInputPrompt("");
+      // setInputPrompt("");
     } catch (error: any) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -48,18 +47,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h3>Answer my IT question</h3>
-        <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="prompt"
-            placeholder="Enter an IT question"
-            value={inputPrompt}
-            onChange={(e) => setInputPrompt(e.target.value)}
-          ></input>
-        </form>
-        <div className="">Answer: {result}</div>
+      <main className="flex w-screen justify-center">
+        <div className="p-4">
+          <h3>Answer my IT question</h3>
+          <form className="flex items-center space-x-4">
+            <textarea
+              className="textarea textarea-secondary"
+              name="prompt"
+              placeholder="Enter an IT question"
+              value={inputPrompt}
+              onChange={(e) => setInputPrompt(e.target.value)}
+            ></textarea>
+            <button className="btn" onClick={onSubmit}>Submit</button>
+          </form>
+          <div className="">Answer: {result}</div>
+        </div>
       </main>
     </>
   );

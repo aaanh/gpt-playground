@@ -6,7 +6,7 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-const gptModel = "text-ada-001"
+const gptModel = "text-davinci-003"
 
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
@@ -34,6 +34,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       model: gptModel,
       prompt: generatePrompt(inputPrompt),
       temperature: 0.6,
+      max_tokens: 150,
+      top_p: 1,
+      frequency_penalty: 1,
+      presence_penalty: 1,
     });
     res.status(200).json({ result: completion.data.choices[0]?.text });
   } catch (error: any) {
@@ -53,10 +57,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 }
 
 function generatePrompt(inputPrompt: string) {
-  const capitalizedPrompt =
-    inputPrompt[0]?.toUpperCase() + inputPrompt.slice(1).toLowerCase();
-  return `Answer the following inquiry about IT services.
-  Prompt: ${capitalizedPrompt}
-  Answer:`;
+  return `Question: ${inputPrompt}
+  Answer: `;
 }
 
