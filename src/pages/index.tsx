@@ -7,7 +7,6 @@ import { trpc } from "../utils/trpc";
 import { useState } from "react";
 
 const Home: NextPage = () => {
-
   const [inputPrompt, setInputPrompt] = useState("");
   const [result, setResult] = useState();
 
@@ -47,18 +46,20 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-screen justify-center">
-        <div className="p-4">
-          <h3>Answer my IT question</h3>
+      <main className="flex w-screen justify-center" data-theme="light">
+        <div className="w-1/2 p-4">
+          <h3>Answer my question gpt-3 step bro</h3>
           <form className="flex items-center space-x-4">
             <textarea
-              className="textarea textarea-secondary"
+              className="textarea-secondary textarea"
               name="prompt"
-              placeholder="Enter an IT question"
+              placeholder=""
               value={inputPrompt}
               onChange={(e) => setInputPrompt(e.target.value)}
             ></textarea>
-            <button className="btn" onClick={onSubmit}>Submit</button>
+            <button className="btn" onClick={onSubmit}>
+              Submit
+            </button>
           </form>
           <div className="">Answer: {result}</div>
         </div>
