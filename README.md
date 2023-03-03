@@ -1,31 +1,25 @@
-# AITS Service Desk Bot Agent
+# A Simple GPT Web Client
 
-## Motivation
+Just a web interface for sending HTTP requests to the paid GPT API.
 
-Service desk, in general, always face a huge workload supporting users in an enterprise. The hurdle scales exponentially when it comes to larger enterprises with intricate systems and processes, from server-hosted services to physical asset management.
+It uses the [Fetch() API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
 
-Realizing that a support agent not only has to learn and memorize knowledge base and procedures but also they have to juggle between different issues at the same time, my manager has proposed developing a bot agent that can proceess tickets coming in asynchronously and/or in parralel to act as a force multiplier for the human agents.
-
-## Requirements
-
-TBA
-
-## System design
-
-TBA
+Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/create-t3-app).
 
 ## Usage
 
-TBA
+- Install dependencies
 
-## Development
+  ```
+  npm install
+  ```
 
-TBA
+- Copy `.env.example` to `.env`
 
-## Contribution
+- Add your OpenAI API key in `.env`
 
-TBA
+- Run
 
-## White paper
-
-TBA
+  ```
+  npm run dev
+  ```
