@@ -69,7 +69,7 @@ const Home: NextPage = () => {
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
             >
-              {result}
+              {`${result}`}
             </ReactMarkdown>
           </div>
         </div>
