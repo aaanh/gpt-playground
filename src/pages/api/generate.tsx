@@ -7,6 +7,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 const gptModel = {
+  0: "gpt-4",
   1: "gpt-3.5-turbo",
   2: "gpt-3.5-turbo-0301",
   3: "text-davinci-003",
@@ -35,7 +36,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const completion = await openai.createChatCompletion({
-      model: gptModel[1],
+      model: gptModel[0],
       messages: [
         {
           role: "user",

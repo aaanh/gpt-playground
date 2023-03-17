@@ -47,7 +47,7 @@ const Home: NextPage = () => {
 
       <main className="flex w-screen justify-center" data-theme="light">
         <div className="w-1/2 p-4">
-          <h3 className="text-2xl">Answer my question gpt-3 step bro</h3>
+          <h3 className="text-2xl">Answer my question</h3>
           <br />
           <form className="flex items-center space-x-4">
             <textarea
