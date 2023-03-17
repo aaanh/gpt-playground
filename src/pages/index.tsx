@@ -46,10 +46,10 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="flex w-screen justify-center" data-theme="light">
-        <div className="w-1/2 p-4">
+        <div className="w-full md:w-1/2 p-4">
           <h3 className="text-2xl">Answer my question</h3>
           <br />
-          <form className="flex items-center space-x-4">
+          <form className="flex items-center space-x-4 flex-col sm:flex-row">
             <textarea
               className="textarea-secondary textarea w-full"
               name="prompt"
@@ -57,6 +57,7 @@ const Home: NextPage = () => {
               value={inputPrompt}
               onChange={(e) => setInputPrompt(e.target.value)}
             ></textarea>
+            <br></br>
             <button className="btn" onClick={onSubmit}>
               Submit
             </button>
