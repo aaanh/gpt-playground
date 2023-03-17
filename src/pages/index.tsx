@@ -62,11 +62,16 @@ const Home: NextPage = () => {
             </button>
           </form>
           <br />
-          <div className="">Answer:</div>
-          <ReactMarkdown
-            children={result}
-            remarkPlugins={[remarkGfm]}
-          ></ReactMarkdown>
+          <div className="font-bold">
+          Answer:
+          </div>
+          <div className="bg-slate-300 p-4 rounded">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+            >
+              {result}
+            </ReactMarkdown>
+          </div>
         </div>
       </main>
     </>
