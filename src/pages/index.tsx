@@ -20,6 +20,7 @@ const Home: NextPage = () => {
       });
 
       const data = await response.json();
+      console.log(await response)
       if (response.status !== 200) {
         throw (
           data.error ||
@@ -36,7 +37,6 @@ const Home: NextPage = () => {
     }
   }
 
-  console.log("result: ", result);
   return (
     <>
       <Head>
