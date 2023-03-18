@@ -106,8 +106,9 @@ const Home: NextPage = () => {
             </button>
           </form>
           <br />
-          <div>
+          
             <h2 className="text-2xl">Request Body</h2>
+            <div className="break-inside overflow-scroll">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{"```json\n" + JSON.stringify({ prompt: inputPrompt, model: gptModel[model], temperature: temperature }, null, 2) + "\n```\n"}</ReactMarkdown>
           </div>
 

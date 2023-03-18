@@ -2,7 +2,7 @@
 
 Just a web interface for sending HTTP requests to the paid GPT API.
 
-It uses the [Fetch() API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API).
+It uses the `openai` npm package.
 
 Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/create-t3-app).
 
