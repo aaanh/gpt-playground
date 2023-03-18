@@ -5,3 +5,68 @@
 html {
   font-family: 'Segoe UI', 'San Francisco', 'system-ui', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
 }
+
+.markdown h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 1rem 0;
+}
+
+.markdown h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 1rem 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  color: #22c55e;
+  text-decoration: underline;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+td {
+  padding: 1rem;
+}
+
+table {
+  text-align: left;
+}
+
+ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+ul ul,
+ol ul {
+  list-style-type: circle;
+  list-style-position: inside;
+  margin-left: 15px;
+}
+ol ol,
+ul ol {
+  list-style-type: lower-latin;
+  list-style-position: inside;
+  margin-left: 15px;
+}
+
+ol ol ol,
+ul ol ol {
+  list-style-type: square;
+  list-style-position: inside;
+  margin-left: 25px;
+}

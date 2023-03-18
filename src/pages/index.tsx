@@ -18,6 +18,7 @@ const Home: NextPage = () => {
   async function onSubmit(event: any) {
     event.preventDefault();
     try {
+      setResult("");
       setLoading(true);
 
       const response = await fetch("/api/generate", {
@@ -33,6 +34,8 @@ const Home: NextPage = () => {
       });
 
       const data = await response.json();
+
+      setLoading(false)
       
       if (response.status !== 200) {
         throw (
@@ -121,7 +124,7 @@ const Home: NextPage = () => {
           <div className="text-2xl">Generated Response</div>
           {result ? (
             <div className="rounded bg-neutral-200 p-4 overflow-scroll">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
                 {`${result}`}
               </ReactMarkdown>
             </div>
