@@ -6,13 +6,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-const gptModel = {
-  0: "gpt-4",
-  1: "gpt-3.5-turbo",
-  2: "gpt-3.5-turbo-0301",
-  3: "text-davinci-003",
-  4: "code-davinci-002",
-};
+
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   if (!configuration.apiKey) {
@@ -25,6 +19,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   }
 
   const inputPrompt = req.body.prompt || "";
+  const reqModel: string = req.body.model || "gpt-4";
+  const temperature = req.body.temperature || 1;
+  const choices = 1;
+
   if (inputPrompt.trim().length === 0) {
     res.status(400).json({
       error: {
@@ -36,7 +34,9 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const completion = await openai.createChatCompletion({
-      model: gptModel[0],
+      model: reqModel,
+      temperature: temperature,
+      n: choices,
       messages: [
         {
           role: "user",

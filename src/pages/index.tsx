@@ -6,7 +6,12 @@ import remarkGfm from "remark-gfm";
 
 const Home: NextPage = () => {
   const [inputPrompt, setInputPrompt] = useState("");
+  const [model, setModel] = useState(0);
+  const [temperature, setTemperature] = useState(1.0);
+
   const [result, setResult] = useState("");
+
+  const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
 
   async function onSubmit(event: any) {
     event.preventDefault();
@@ -16,11 +21,15 @@ const Home: NextPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: inputPrompt }),
+        body: JSON.stringify({
+          prompt: inputPrompt,
+          model: gptModel[model],
+          temperature: temperature,
+        }),
       });
 
       const data = await response.json();
-      console.log(await response)
+      
       if (response.status !== 200) {
         throw (
           data.error ||
@@ -45,13 +54,47 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-screen justify-center" data-theme="light">
-        <div className="w-full md:w-1/2 p-4">
-          <h3 className="text-2xl">Answer my question</h3>
+      <main
+        className="flex min-h-screen w-screen justify-center"
+        data-theme="light"
+      >
+        <div className="w-full p-4 md:w-1/2">
+          <h3 className="text-2xl">Enter prompt</h3>
+          <div className="mt-4 flex w-full flex-wrap items-center justify-between">
+            <div>
+              <label className="input-group">
+                <input
+                  onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                  step={0.1}
+                  type="number"
+                  min={0}
+                  max={2}
+                  value={temperature > 2 ? 2 : temperature < 0 ? 0 : temperature}
+                  placeholder="1.0"
+                  className="input-bordered input"
+                />
+                <span>Temperature</span>
+              </label>
+            </div>
+
+            <select
+              tabIndex={0}
+              value={model}
+              onChange={(e) => setModel(parseInt(e.target.value))}
+              className="select-bordered select w-full max-w-xs"
+            >
+              <option disabled selected>
+                Select a GPT model
+              </option>
+              <option value={0}>GPT-4 (default)</option>
+              <option value={1}>GPT-3.5</option>
+              <option value={2}>Davinci-003 (GPT-3)</option>
+            </select>
+          </div>
           <br />
-          <form className="flex items-center space-x-4 flex-col sm:flex-row">
+          <form className="flex flex-col items-center space-x-4 sm:flex-row">
             <textarea
-              className="textarea-secondary textarea w-full"
+              className="textarea-primary textarea w-full"
               name="prompt"
               placeholder=""
               value={inputPrompt}
@@ -63,16 +106,19 @@ const Home: NextPage = () => {
             </button>
           </form>
           <br />
-          <div className="font-bold">
-          Answer:
+          <div>
+            <h2 className="text-2xl">Request Body</h2>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{"```json\n" + JSON.stringify({ prompt: inputPrompt, model: gptModel[model], temperature: temperature }, null, 2) + "\n```\n"}</ReactMarkdown>
           </div>
-          <div className="bg-slate-300 p-4 rounded">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-            >
-              {`${result}`}
-            </ReactMarkdown>
-          </div>
+
+          <div className="text-2xl">Generated Response</div>
+          {result ? (
+            <div className="rounded bg-neutral-200 p-4">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {`${result}`}
+              </ReactMarkdown>
+            </div>
+          ) : null}
         </div>
       </main>
     </>
