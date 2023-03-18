@@ -35,7 +35,7 @@ const Home: NextPage = () => {
       const data = await response.json();
 
       setLoading(false)
-      
+
       if (response.status !== 200) {
         throw (
           data.error ||
@@ -63,10 +63,15 @@ const Home: NextPage = () => {
       <NavBar></NavBar>
 
       <main
-        className="flex min-h-screen justify-center pt-12"
+        className="flex min-h-screen items-center justify-center pt-12"
         data-theme="light"
       >
-        
+        <div className="flex flex-col space-y-2 p-2 sm:p-0">
+          <h1 className="text-6xl">
+            Welcome.
+          </h1>
+          <p className="text-lg">Select one of the demos above to get started.</p>
+        </div>
       </main>
       <Footer></Footer>
     </>
