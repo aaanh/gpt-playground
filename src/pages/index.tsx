@@ -10,12 +10,15 @@ const Home: NextPage = () => {
   const [temperature, setTemperature] = useState(1.0);
 
   const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
 
   async function onSubmit(event: any) {
     event.preventDefault();
     try {
+      setLoading(true);
+
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
@@ -119,7 +122,7 @@ const Home: NextPage = () => {
                 {`${result}`}
               </ReactMarkdown>
             </div>
-          ) : null}
+          ) : loading ? <div className="">Loading response...</div> : null}
         </div>
       </main>
     </>
