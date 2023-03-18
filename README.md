@@ -10,7 +10,11 @@ Front-end, unconnected API, demo: <https://gpt-demo.aaanh.app>
 
 Production: <https://gpt.aaanh.app>
 
-Please create an issue with the label `request-access` if you don't have access. State the Github organization if that applies to you.
+Please create an issue with the label `request-access` if you don't have access. State your intentions and the Github organization (if applied) to you.
+
+Permission granting rights are all reserved for the maintainer.
+
+Donate/Sponsor: <https://ko-fi.com/aaanh>
 
 ## Usage
 
