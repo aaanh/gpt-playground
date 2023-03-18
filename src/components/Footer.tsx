@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
           </div>
           <div className="w-full md:w-auto text-center md:text-right">
             <p className="text-white mx-2">
-              GPT models and responses are provided through paid OpenAI's API.
+              GPT models and responses are provided through paid OpenAI&apos;s API.
             </p>
             <p className="text-white mx-2">
               ⚠️ Internal uses, PoC, demos, not production.
