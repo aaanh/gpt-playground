@@ -5,53 +5,6 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
 const Home: NextPage = () => {
-  const [inputPrompt, setInputPrompt] = useState("");
-  const [model, setModel] = useState(0);
-  const [temperature, setTemperature] = useState(1.0);
-
-  const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
-
-  async function onSubmit(event: any) {
-    event.preventDefault();
-    try {
-      setResult("");
-      setLoading(true);
-
-      const response = await fetch("/api/generate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          prompt: inputPrompt,
-          model: gptModel[model],
-          temperature: temperature,
-        }),
-      });
-
-      const data = await response.json();
-
-      setLoading(false)
-
-      if (response.status !== 200) {
-        throw (
-          data.error ||
-          new Error(`Request failed with status ${response.status}`)
-        );
-      }
-      const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-      setResult(data.result.replace(regex, "<br>"));
-      // setInputPrompt("");
-    } catch (error: any) {
-      // Consider implementing your own error handling logic here
-      console.error(error);
-      alert(error.message);
-    }
-  }
-
   return (
     <>
       <Head>
