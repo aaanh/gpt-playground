@@ -12,8 +12,8 @@ import md5 from "md5";
 const identity = {
   name: "Anh H. Nguyen",
   secondaryText: "Software Engineer",
-  tertiaryText: "Nuance + Microsoft",
-  email: "t-anhnguyen@microsoft.com",
+  tertiaryText: "",
+  email: "anhnguyen@aaanh.com",
 };
 
 function gravatarUrl(email: string): string {
