@@ -29,9 +29,8 @@ function MyPersona(
     <>
       <Popover {...popoverProps}>
         <PopoverTrigger disableButtonEnhancement>
-          <Button>
+          <button className="btn btn-lg normal-case btn-outline hover:bg-neutral-700">
             <Persona
-              className=""
               name={identity.name}
               secondaryText={identity.secondaryText}
               avatar={{
@@ -42,13 +41,13 @@ function MyPersona(
               size="extra-large"
               {...props}
             />
-          </Button>
+          </button>
         </PopoverTrigger>
 
         <PopoverSurface>
           <div className="flex w-64 flex-col space-y-2">
             <Persona
-              className=""
+              
               name={identity.name}
               secondaryText={identity.email}
               tertiaryText={identity.tertiaryText}
@@ -68,18 +67,44 @@ function MyPersona(
   );
 }
 
-function MyPersonaNarrow(props: Partial<PersonaProps>) {
+function MyPersonaNarrow(props: Partial<PersonaProps>,
+  popoverProps: Partial<PopoverProps>
+) {
   return (
-    <Persona
-      presence={{ status: "available" }}
-      size="extra-large"
-      avatar={{
-        image: {
-          src: "https://avatars.githubusercontent.com/u/37283437?v=4",
-        },
-      }}
-      {...props}
-    />
+    <Popover {...popoverProps}>
+      <PopoverTrigger disableButtonEnhancement>
+        <Persona
+          
+            presence={{ status: "available" }}
+            avatar={{
+              image: {
+                src: gravatarUrl(identity.email),
+              },
+            }}
+            size="extra-large"
+            {...props}
+          />
+      </PopoverTrigger>
+
+      <PopoverSurface>
+        <div className="flex w-64 flex-col space-y-2">
+          <Persona
+            className=""
+            name={identity.name}
+            secondaryText={identity.email}
+            tertiaryText={identity.tertiaryText}
+            presence={{ status: "available" }}
+            avatar={{
+              image: {
+                src: gravatarUrl(identity.email),
+              },
+            }}
+            size="extra-large"
+            {...props}
+          />
+        </div>
+      </PopoverSurface>
+    </Popover>
   );
 }
 

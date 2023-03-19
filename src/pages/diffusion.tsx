@@ -1,13 +1,11 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
-const SingleTurn: NextPage = () => {
+const Diffusion: NextPage = () => {
   const [inputPrompt, setInputPrompt] = useState("");
   const [model, setModel] = useState(0);
   const [temperature, setTemperature] = useState(1.0);
@@ -57,6 +55,12 @@ const SingleTurn: NextPage = () => {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>AAANH Labs</title>
+        <meta name="description" content="AAANH Labs" />
+        <link rel="icon" href="/Logo.png" />
+      </Head>
+
       <div className="w-full p-4 md:w-1/2">
         <h3 className="text-2xl">Enter prompt</h3>
         <div className="mt-4 flex w-full flex-wrap items-center justify-between">
@@ -120,8 +124,7 @@ const SingleTurn: NextPage = () => {
         </div> : null}
       </div>
     </DefaultLayout>
+  )
+}
 
-  );
-};
-
-export default SingleTurn;
+export default Diffusion
