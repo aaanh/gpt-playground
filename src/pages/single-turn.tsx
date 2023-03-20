@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
@@ -13,6 +14,8 @@ const SingleTurn: NextPage = () => {
   const [loading, setLoading] = useState(false);
 
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
+
+  const router = useRouter();
 
   async function onSubmit(event: any) {
     event.preventDefault();
@@ -36,7 +39,10 @@ const SingleTurn: NextPage = () => {
 
       setLoading(false)
 
-      if (response.status !== 200) {
+      if (response.status === 429) {
+        router.push("/ratelimited")
+        throw (new Error(`${response.status}: Too Many Requests`))
+      } else if (response.status !== 200) {
         throw (
           data.error ||
           new Error(`Request failed with status ${response.status}`)

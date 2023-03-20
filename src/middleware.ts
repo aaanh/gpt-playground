@@ -19,7 +19,7 @@ export default async function middleware(
   const ip = request.ip ?? "127.0.0.1"
   const { success, pending, limit, reset, remaining } = await ratelimit.limit(ip);
   
-  return success ? NextResponse.next() : NextResponse.redirect(new URL("/ratelimited", request.url))
+  return success ? NextResponse.next() : NextResponse.redirect(new URL("/api/ratelimited", request.url))
 }
 
 export const config = {

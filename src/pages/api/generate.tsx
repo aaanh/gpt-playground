@@ -62,7 +62,3 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     }
   }
 }
-
-function generatePrompt(inputPrompt: string) {
-  return `${inputPrompt}`;
-}
