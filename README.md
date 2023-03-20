@@ -28,6 +28,8 @@ Donate/Sponsor: <https://ko-fi.com/aaanh>
 
 - Add your OpenAI API key in `.env`
 
+- (Optional) Add your upstash Redis tokens for rate limiting
+
 - Run
 
   ```
