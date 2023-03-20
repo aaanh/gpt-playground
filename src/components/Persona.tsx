@@ -11,7 +11,7 @@ import md5 from "md5";
 
 const identity = {
   name: "Anh H. Nguyen",
-  secondaryText: "Software Engineer",
+  jobTitle: "Software Engineer",
   tertiaryText: "",
   email: "anhnguyen@aaanh.com",
 };
@@ -32,7 +32,6 @@ function MyPersona(
           <button className="btn btn-lg normal-case btn-outline hover:bg-neutral-700">
             <Persona
               name={identity.name}
-              secondaryText={identity.secondaryText}
               avatar={{
                 image: {
                   src: gravatarUrl(identity.email),
@@ -49,8 +48,8 @@ function MyPersona(
             <Persona
               
               name={identity.name}
-              secondaryText={identity.email}
-              tertiaryText={identity.tertiaryText}
+              secondaryText={identity.jobTitle}
+              tertiaryText={identity.email}
               presence={{ status: "available" }}
               avatar={{
                 image: {
@@ -91,8 +90,8 @@ function MyPersonaNarrow(props: Partial<PersonaProps>,
           <Persona
             className=""
             name={identity.name}
-            secondaryText={identity.email}
-            tertiaryText={identity.tertiaryText}
+            secondaryText={identity.jobTitle}
+            tertiaryText={identity.email}
             presence={{ status: "available" }}
             avatar={{
               image: {

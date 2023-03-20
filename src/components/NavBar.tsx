@@ -32,10 +32,10 @@ function NavBar() {
         <NavBtn enabled={false} text="Multi-Turn" href="/multi-turn"></NavBtn>
         <NavBtn enabled={false} text="Diffusion" href="/diffusion"></NavBtn>
       </div>
-      <div className='hidden md:flex w-48 justify-end'>
+      {/* <div className='hidden md:flex w-48 justify-end'>
         <MyPersona></MyPersona>
-      </div>
-      <div className='flex md:hidden'>
+      </div> */}
+      <div className='md:w-48 flex justify-end'>
         <MyPersonaNarrow></MyPersonaNarrow>
       </div>
     </nav>
