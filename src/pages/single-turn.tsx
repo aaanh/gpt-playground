@@ -1,10 +1,7 @@
 import { type NextPage } from "next";
-import Head from "next/head";
 import { useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
 const SingleTurn: NextPage = () => {

@@ -11,6 +11,7 @@
   "dependencies": {
     "@fluentui/react-components": "^9.18.2",
     "@prisma/client": "^4.5.0",
+    "@upstash/ratelimit": "^0.4.0",
     "daisyui": "^2.51.4",
     "gpt-3-encoder": "^1.1.4",
     "md5": "^2.3.0",
