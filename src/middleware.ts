@@ -9,7 +9,7 @@ const redis = new Redis({
 
 const ratelimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(5, "30 s"),
+  limiter: Ratelimit.slidingWindow(5, "1 m"),
 })
 
 export default async function middleware(
