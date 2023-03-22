@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpt-frontend
+spec:
+  selector:
+    matchLabels:
+      app: gpt-frontend
+  template:
+    metadata:
+      labels:
+        app: gpt-frontend
+    spec:
+      containers:
+      - name: gpt-frontend
+        image: aaanh.azurecr.io/gpt/frontend
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+        - name: acr-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpt-frontend
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+  selector: 
+    app: gpt-frontend

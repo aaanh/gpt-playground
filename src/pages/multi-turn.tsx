@@ -32,7 +32,7 @@ const MultiTurn: NextPage = () => {
   async function onSubmit(event: any) {
     event.preventDefault();
     try {
-      setResult("");
+      setResult({ speaker: "bot", msg: ""});
       setLoading(true);
 
       const response = await fetch("/api/generate", {
