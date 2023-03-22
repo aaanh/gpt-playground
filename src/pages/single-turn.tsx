@@ -87,7 +87,7 @@ const SingleTurn: NextPage = () => {
           >
             <option value={0}>GPT-4 (default)</option>
             <option value={1}>GPT-3.5</option>
-            <option value={2}>Davinci-003 (GPT-3)</option>
+            <option disabled value={2}>Davinci-003 (GPT-3)</option>
           </select>
         </div>
         <br />
