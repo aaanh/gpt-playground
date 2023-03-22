@@ -2,9 +2,9 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 
-const numOfRequests: number = parseInt(process.env.DEMO_RATE_LIMIT_REQUESTS || process.env.PROD_RATE_RATE_LIMIT_REQUESTS || "2")
+const numOfRequests: number = parseInt(process.env.RATE_LIMIT_REQUESTS || "2")
 
-const duration: any = process.env.DEMO_RATE_LIMIT_DURATION || process.env.PROD_RATE_LIMIT_DURATION || "1 m"
+const duration: any = process.env.RATE_LIMIT_DURATION || "1 m"
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
