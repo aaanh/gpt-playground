@@ -20,18 +20,18 @@ Donate/Sponsor: <https://ko-fi.com/aaanh>
 
 ### App Features
 
-- [] Application telemetry (Kafka or Cassandra)
-  - [] Emit request events with opaque body
-  - [] Emit error events
-  - [] Implement session-based LogRocket
-- [] Cache prompts and responses in local storage
-- [] Multi-turn implementation (similar to ChatGPT)
-- [] Diffusion implementation (DALL-E 2)
+- [ ] Application telemetry (Kafka or Cassandra)
+  - [ ] Emit request events with opaque body
+  - [ ] Emit error events
+  - [ ] Implement session-based LogRocket
+- [ ] Cache prompts and responses in local storage
+- [ ] Multi-turn implementation (similar to ChatGPT)
+- [ ] Diffusion implementation (DALL-E 2)
 
 ### DevOps
 
-- [] ConfigMap to export `.env` variables into the deployment
-- [] Migrate from Linode bare-metal to AKS
+- [ ] ConfigMap to export `.env` variables into the deployment
+- [ ] Migrate from Linode bare-metal to AKS
 
 ## Usage
 
