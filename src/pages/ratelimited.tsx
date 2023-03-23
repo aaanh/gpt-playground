@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import Link from "next/link";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
 const Ratelimited: NextPage = (props: any) => {
@@ -9,7 +10,7 @@ const Ratelimited: NextPage = (props: any) => {
       <br />
       
       <p>Your IP address exceeded current rule: {props.numOfRequests} requests per {props.duration}.</p>
-      <p>Try again later.</p>
+      <p><Link className="text-blue-500 hover:font-bold hover:underline underline-offset-4" href="/single-turn">Go back</Link> and try again later.</p>
     </div>
   </DefaultLayout>
 }

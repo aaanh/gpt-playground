@@ -5,8 +5,14 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
+type HistoryItem = {
+  prompt: string;
+  response: string;
+};
+
 const SingleTurn: NextPage = () => {
   const [inputPrompt, setInputPrompt] = useState("");
+  const [history, setHistory] = useState<HistoryItem[]>([]); // [ { prompt: "", response: "" } ]
   const [model, setModel] = useState(0);
   const [temperature, setTemperature] = useState(1.0);
 
@@ -20,6 +26,9 @@ const SingleTurn: NextPage = () => {
   useEffect(() => {
     if (localStorage.getItem("prompt")) {
       setInputPrompt(localStorage.getItem("prompt") || "");
+    }
+    if (localStorage.getItem("history")) {
+      setHistory(JSON.parse(localStorage.getItem("history") || "[]"));
     }
   }, []);
 
@@ -58,7 +67,9 @@ const SingleTurn: NextPage = () => {
       }
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
       setResult(data.result.replace(regex, "<br>"));
-      // setInputPrompt("");
+
+      setHistory([...history, { prompt: inputPrompt, response: data.result }]);
+
     } catch (error: any) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -129,6 +140,33 @@ const SingleTurn: NextPage = () => {
           <img width={32} height={32} className="bg-transparent" src="/loader.gif"></img>
           <div>Loading response...</div>
         </div> : null}
+        <br />
+
+
+        <details>
+          <summary>
+            History
+          </summary>
+
+          {history.map((item, index) => 
+            <div key={index} className="flex flex-col mb-2">
+              <div className="my-2 w-full flex-col flex items-end">
+                <div className="font-bold max-w-lg">Prompt</div>
+                <div className="bg-blue-300 max-w-xl p-2 rounded-lg">
+                  {item.prompt}
+                </div>
+              </div>
+              <div className="my-2 w-full flex-col flex items-start">
+                <div className="font-bold max-w-sm">Response</div>
+                <div className="bg-neutral-300 max-w-xl p-2 rounded-lg">
+                  {item.response}
+                </div>
+              </div>
+              
+            </div>
+          )}
+
+        </details>
       </div>
     </DefaultLayout>
 
