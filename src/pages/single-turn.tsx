@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
 import DefaultLayout from "~/layouts/DefaultLayout";
@@ -16,6 +16,12 @@ const SingleTurn: NextPage = () => {
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem("prompt")) {
+      setInputPrompt(localStorage.getItem("prompt") || "");
+    }
+  }, []);
 
   async function onSubmit(event: any) {
     event.preventDefault();
@@ -34,6 +40,8 @@ const SingleTurn: NextPage = () => {
           temperature: temperature,
         }),
       });
+
+      localStorage.setItem("prompt", inputPrompt);
 
       const data = await response.json();
 
