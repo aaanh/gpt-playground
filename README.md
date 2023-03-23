@@ -49,6 +49,8 @@ Donate/Sponsor: <https://ko-fi.com/aaanh>
   npm run dev
   ```
 
+<iframe src="https://link.excalidraw.com/readonly/QUecUYbc1u4f7HsoU2Rv?darkMode=true" width="100%" height="100%" style="border: none;"></iframe>
+
 ## Deployment
 
 > Note: The steps below apply for Microsoft Azure cloud platform but the principles essentially can be applied on any cloud platforms.
