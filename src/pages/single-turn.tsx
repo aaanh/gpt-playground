@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
@@ -87,8 +88,13 @@ const SingleTurn: NextPage = () => {
 
   return (
     <DefaultLayout>
+      <Head>
+        <title>Single-Turn Prompt</title>
+        <meta name="description" content="AAANH Labs" />
+        <link rel="icon" href="/Logo.png" />
+      </Head>
       <div className="w-full p-4 md:w-1/2">
-        <h3 className="text-2xl">Enter prompt</h3>
+        <h3 className="text-xl">Enter prompt</h3>
         <div className="mt-4 flex w-full flex-wrap items-center justify-between">
           <div>
             <label className="input-group">
@@ -118,11 +124,11 @@ const SingleTurn: NextPage = () => {
           </select>
         </div>
         <br />
-        <form className="flex flex-col items-center space-x-4 sm:flex-row">
+        <form className="flex flex-col items-center md:items-start">
           <textarea
-            className="textarea-primary textarea w-full"
+            className="border-blue-300 focus:border-transparent focus:outline-blue-400 outline-1 outline-none textarea w-full resize-none"
             name="prompt"
-            placeholder=""
+            placeholder="Enter your dankest question here..."
             value={inputPrompt}
             onChange={(e) => setInputPrompt(e.target.value)}
           ></textarea>
@@ -133,11 +139,11 @@ const SingleTurn: NextPage = () => {
         </form>
         <br />
 
-        <h2 className="text-2xl">Request Body</h2>
+        <h2 className="text-xl">Request Body</h2>
         <ReactMarkdown className="break-word p-4 rounded bg-neutral-200" remarkPlugins={[remarkGfm]}>{"```json\n" + JSON.stringify({ prompt: inputPrompt, model: gptModel[model], temperature: temperature }, null, 2) + "\n```\n"}</ReactMarkdown>
 
         <br />
-        <div className="text-2xl">Generated Response</div>
+        <div className="text-xl">Generated Response</div>
         {result ? (
           <div className="rounded bg-neutral-200 p-4 overflow-scroll">
             <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
@@ -150,14 +156,13 @@ const SingleTurn: NextPage = () => {
         </div> : null}
         <br />
 
-
-        <details>
-          <summary>
-            History
+        <details className="overflow-y-scroll max-h-64 border p-2 rounded-md">
+          <summary className="font-bold">
+            History (scrollable)
           </summary>
-
+          {history.length <= 0 && <div className="text-xl text-neutral-500 italic">💁‍♀️ There's nothing here. Yet.</div>}
           {history.map((item, index) => 
-            <div key={index} className="flex flex-col mb-2">
+            <div key={index} className="flex flex-col my-2 border-b-2 border-dotted">
               <div className="my-2 w-full flex-col flex items-end">
                 <div className="font-bold max-w-lg">Prompt</div>
                 <div className="bg-blue-300 max-w-xl p-2 rounded-lg">
@@ -170,7 +175,6 @@ const SingleTurn: NextPage = () => {
                   {item.response}
                 </div>
               </div>
-              
             </div>
           )}
 

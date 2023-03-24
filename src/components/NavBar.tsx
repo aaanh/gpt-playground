@@ -24,10 +24,10 @@ const NavBtn = (props: NavBtnProps) => {
 function NavBar() {
   return (
     <nav className="bg-neutral-900 flex items-center space-x-4 absolute top-0 left-0 p-4 justify-between w-full">
-      <div className='w-48 flex justify-start'>
+      <div className='w-18 flex justify-start'>
         <Branding></Branding>
       </div>
-      <div className='flex space-x-4'>
+      <div className='flex space-x-3'>
         <NavBtn enabled={true} text="Single-Turn" href="/single-turn"></NavBtn>
         <NavBtn enabled={false} text="Multi-Turn" href="/multi-turn"></NavBtn>
         <NavBtn enabled={false} text="Diffusion" href="/diffusion"></NavBtn>
@@ -35,7 +35,7 @@ function NavBar() {
       {/* <div className='hidden md:flex w-48 justify-end'>
         <MyPersona></MyPersona>
       </div> */}
-      <div className='md:w-48 flex justify-end'>
+      <div className='md:w-18 flex justify-end'>
         <MyPersonaNarrow></MyPersonaNarrow>
       </div>
     </nav>
