@@ -160,7 +160,7 @@ const SingleTurn: NextPage = () => {
           <summary className="font-bold">
             History (scrollable)
           </summary>
-          {history.length <= 0 && <div className="text-xl text-neutral-500 italic">💁‍♀️ There's nothing here. Yet.</div>}
+          {history.length <= 0 && <div className="text-xl text-neutral-500 italic">💁‍♀️ There&apos;s nothing here. Yet.</div>}
           {history.map((item, index) => 
             <div key={index} className="flex flex-col my-2 border-b-2 border-dotted">
               <div className="my-2 w-full flex-col flex items-end">
