@@ -24,13 +24,20 @@ const SingleTurn: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
+    const storedHistory = localStorage.getItem("history");
     if (localStorage.getItem("prompt")) {
       setInputPrompt(localStorage.getItem("prompt") || "");
     }
-    if (localStorage.getItem("history")) {
-      setHistory(JSON.parse(localStorage.getItem("history") || "[]"));
+    if (storedHistory) {
+      if (Array.isArray(JSON.parse(storedHistory))) {
+        setHistory(JSON.parse(storedHistory));
+      }
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('history', JSON.stringify(history));
+  }, [history]);
 
   async function onSubmit(event: any) {
     event.preventDefault();
@@ -66,10 +73,11 @@ const SingleTurn: NextPage = () => {
         );
       }
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-      setResult(data.result.replace(regex, "<br>"));
 
-      setHistory([...history, { prompt: inputPrompt, response: data.result }]);
+      const updatedResult = data.result.replace(regex, "<br>");
+      setResult(updatedResult);
 
+      setHistory([...history, { prompt: inputPrompt, response: updatedResult }]);
     } catch (error: any) {
       // Consider implementing your own error handling logic here
       console.error(error);
