@@ -37,6 +37,10 @@ const SingleTurn: NextPage = () => {
   }, []);
 
   useEffect(() => {
+    localStorage.setItem("prompt", inputPrompt);
+  }, [inputPrompt])
+
+  useEffect(() => {
     localStorage.setItem('history', JSON.stringify(history));
   }, [history]);
 
@@ -86,6 +90,11 @@ const SingleTurn: NextPage = () => {
     }
   }
 
+  const clearHistory = () => {
+    setHistory([]);
+    setInputPrompt("");
+  };
+
   return (
     <DefaultLayout>
       <Head>
@@ -133,9 +142,14 @@ const SingleTurn: NextPage = () => {
             onChange={(e) => setInputPrompt(e.target.value)}
           ></textarea>
           <br></br>
-          <button className={"btn " + (loading ? "btn-disabled" : "")} onClick={onSubmit}>
-            Submit
-          </button>
+          <div className="flex flex-wrap space-x-2">
+            <button className={"btn btn-success btn-outline normal-case " + (loading ? "btn-disabled" : "")} onClick={onSubmit}>
+              Submit
+            </button>
+            <button className={"btn btn-outline btn-error normal-case"} onClick={(e) => { e.preventDefault(); setInputPrompt("") }}>
+              Clear
+            </button>
+          </div>
         </form>
         <br />
 
@@ -156,29 +170,32 @@ const SingleTurn: NextPage = () => {
         </div> : null}
         <br />
 
-        <details className="overflow-y-scroll max-h-64 border p-2 rounded-md">
+        <details className="">
           <summary className="font-bold">
             History (scrollable)
           </summary>
-          {history.length <= 0 && <div className="text-xl text-neutral-500 italic">💁‍♀️ There&apos;s nothing here. Yet.</div>}
-          {history.map((item, index) => 
-            <div key={index} className="flex flex-col my-2 border-b-2 border-dotted">
-              <div className="my-2 w-full flex-col flex items-end">
-                <div className="font-bold max-w-lg">Prompt</div>
-                <div className="bg-blue-300 max-w-xl p-2 rounded-lg">
-                  {item.prompt}
+          <div className="max-h-64 overflow-y-scroll border p-2 rounded-md">
+            {history.length <= 0 && <div className="text-xl text-neutral-500 italic">💁‍♀️ There&apos;s nothing here. Yet.</div>}
+            {history.map((item, index) =>
+              <div key={index} className="flex flex-col my-2 border-b-2 border-dotted">
+                <div className="my-2 w-full flex-col flex items-end">
+                  <div className="font-bold max-w-lg">Prompt</div>
+                  <div className="bg-blue-300 max-w-xl p-2 rounded-lg">
+                    {item.prompt}
+                  </div>
+                </div>
+                <div className="my-2 w-full flex-col flex items-start">
+                  <div className="font-bold max-w-sm">Response</div>
+                  <div className="bg-neutral-300 max-w-xl p-2 rounded-lg">
+                    {item.response}
+                  </div>
                 </div>
               </div>
-              <div className="my-2 w-full flex-col flex items-start">
-                <div className="font-bold max-w-sm">Response</div>
-                <div className="bg-neutral-300 max-w-xl p-2 rounded-lg">
-                  {item.response}
-                </div>
-              </div>
-            </div>
-          )}
-
+            )}
+          </div>
         </details>
+        <br></br>
+        <button className="btn btn-info normal-case float-right" onClick={clearHistory}>Clear History</button>
       </div>
     </DefaultLayout>
 
