@@ -119,7 +119,7 @@ const MultiTurn: NextPage = () => {
   return (
     <DefaultLayout>
       <Head>
-        <title>Single-Turn Prompt</title>
+        <title>Multi-Turn Chat</title>
         <meta name="description" content="AAANH Labs" />
         <link rel="icon" href="/Logo.png" />
       </Head>
