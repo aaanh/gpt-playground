@@ -16,38 +16,38 @@ Donate/Sponsor: <https://ko-fi.com/aaanh>
 
 ### App Features
 
-- [ ] Application telemetry (Kafka or Cassandra)
-  - [ ] Emit request events with opaque body
-  - [ ] Emit error events
-  - [ ] Implement session-based LogRocket
-- [ ] Cache prompts and responses in local storage
-- [ ] Multi-turn implementation (similar to ChatGPT)
-- [ ] Diffusion implementation (DALL-E 2)
+-   [ ] Application telemetry (Kafka or Cassandra)
+    -   [ ] Emit request events with opaque body
+    -   [ ] Emit error events
+    -   [ ] Implement session-based LogRocket
+-   [x] Cache prompts and responses in local storage
+-   [ ] Multi-turn implementation (similar to ChatGPT)
+-   [ ] Diffusion implementation (DALL-E 2)
 
 ### DevOps
 
-- [ ] ConfigMap to export `.env` variables into the deployment
-- [ ] Migrate from Linode bare-metal to AKS
+-   [ ] ConfigMap to export `.env` variables into the deployment
+-   [ ] Migrate from Linode bare-metal to AKS
 
 ## Usage
 
-- Install dependencies
+-   Install dependencies
 
-  ```
-  npm install
-  ```
+    ```
+    npm install
+    ```
 
-- Copy `.env.example` to `.env`
+-   Copy `.env.example` to `.env`
 
-- Add your OpenAI API key in `.env`
+-   Add your OpenAI API key in `.env`
 
-- (Optional) Add your upstash Redis tokens for rate limiting
+-   (Optional) Add your upstash Redis tokens for rate limiting
 
-- Run
+-   Run
 
-  ```
-  npm run dev
-  ```
+    ```
+    npm run dev
+    ```
 
 <iframe src="https://link.excalidraw.com/readonly/QUecUYbc1u4f7HsoU2Rv?darkMode=true" width="100%" height="100%" style="border: none;"></iframe>
 
@@ -61,32 +61,38 @@ Donate/Sponsor: <https://ko-fi.com/aaanh>
 
 #### Prerequisites
 
-- Docker Desktop with Kubernetes enabled
-- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-  - Private ACR created
-  - Service Principal with acrPull role for that ACR
-  - Have a Docker image of the frontend application built and pushed to the private ACR
+-   Docker Desktop with Kubernetes enabled
+-   [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+    -   Private ACR created
+    -   Service Principal with acrPull role for that ACR
+    -   Have a Docker image of the frontend application built and pushed to the private ACR
 
 #### Step by step
 
-- Create k8s secret in local cluster. E.g. `acr-secret`
-  ```sh
-  kubectl create secret docker-registry acr-secret --docker-server=my-private-cr.azurecr.io --docker-username=service-principal-application-id --docker-password=service-principal-client-secret
-  ```
-- Reference the k8s secret in the deployment manifest spec
-  ```yaml
-  # ...
-  container:
-  # ...
-  imagePullSecrets:
-    - name: acr-secret
-  ```
-- Deploy the application
-  ```
-  kubectl apply -f k8s/gpt-frontend.yaml
-  ```
-- Navigate to `localhost:3000`
+-   Create k8s secret in local cluster. E.g. `acr-secret`
+    ```sh
+    kubectl create secret docker-registry acr-secret --docker-server=my-private-cr.azurecr.io --docker-username=service-principal-application-id --docker-password=service-principal-client-secret
+    ```
+-   Reference the k8s secret in the deployment manifest spec
+    ```yaml
+    # ...
+    container:
+    # ...
+    imagePullSecrets:
+        - name: acr-secret
+    ```
+-   Deploy the application
+    ```
+    kubectl apply -f k8s/gpt-frontend.yaml
+    ```
+-   Navigate to `localhost:3000`
 
 ### AKS
 
-- TBA
+-   TBA
+
+## Contributing
+
+All types of contributions, e.g. suggestion, MR/PR, bug report, etc., are warmly welcomed.
+
+Please refer to [the CONTRIBUTE.md document](CONTRIBUTE.md) and [the Code of Conduct](CONDUCT.md) for more detailed guidelines.
