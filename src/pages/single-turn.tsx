@@ -12,18 +12,22 @@ type HistoryItem = {
 };
 
 const SingleTurn: NextPage = () => {
+  // Prompt and Response
   const [inputPrompt, setInputPrompt] = useState("");
-  const [history, setHistory] = useState<HistoryItem[]>([]); // [ { prompt: "", response: "" } ]
-  const [model, setModel] = useState(0);
-  const [temperature, setTemperature] = useState(1.0);
-
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // API Parameters
+  const [model, setModel] = useState(0);
+  const [temperature, setTemperature] = useState(1.0);
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
 
+
+  // Application
   const router = useRouter();
 
+  // Runtime hooks
   useEffect(() => {
     const storedHistory = localStorage.getItem("history");
     if (localStorage.getItem("prompt")) {
@@ -44,13 +48,14 @@ const SingleTurn: NextPage = () => {
     localStorage.setItem('history', JSON.stringify(history));
   }, [history]);
 
+  // Function definitions
   async function onSubmit(event: any) {
     event.preventDefault();
     try {
       setResult("");
       setLoading(true);
 
-      const response = await fetch("/api/generate", {
+      const response = await fetch("/api/ask-gpt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +68,6 @@ const SingleTurn: NextPage = () => {
       });
 
       localStorage.setItem("prompt", inputPrompt);
-
       const data = await response.json();
 
       setLoading(false)
@@ -77,23 +81,24 @@ const SingleTurn: NextPage = () => {
           new Error(`Request failed with status ${response.status}`)
         );
       }
+
       const regex = /\\n|\\r\\n|\\n\\r|\\r/g;
-
       const updatedResult = data.result.replace(regex, "<br>");
-      setResult(updatedResult);
 
+      setResult(updatedResult);
       setHistory([...history, { prompt: inputPrompt, response: updatedResult }]);
     } catch (error: any) {
-      // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
     }
   }
 
-  const clearHistory = () => {
+  function clearHistory() {
     setHistory([]);
     setInputPrompt("");
-  };
+  }
+
+  // End of Function definitions
 
   return (
     <DefaultLayout>

@@ -20,11 +20,11 @@ const Home: NextPage = () => {
         <p className="text-lg">Select one of the demos below to get started.</p>
         <div className="flex flex-col text-black">
           <NavBtn enabled={true} text="Single-Turn" href="/single-turn"></NavBtn>
-          <NavBtn enabled={false} text="Multi-Turn" href="/multi-turn"></NavBtn>
-          <NavBtn enabled={false} text="Diffusion" href="/diffusion"></NavBtn>
+          <NavBtn enabled={true} text="Multi-Turn" href="/multi-turn"></NavBtn>
+          <NavBtn enabled={true} text="Diffusion" href="/diffusion"></NavBtn>
         </div>
       </div>
-    
+
     </DefaultLayout>
   );
 };
