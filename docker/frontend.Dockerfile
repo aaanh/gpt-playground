@@ -2,7 +2,7 @@ ARG pull=false
 FROM aaanh.azurecr.io/web/next-base:latest
 
 WORKDIR /app
-COPY . .
+COPY frontend.Dockerfile .
 
 RUN cd /app && npm install && npm run build
 
