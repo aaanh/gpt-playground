@@ -6,11 +6,16 @@ It uses the `openai` npm package.
 
 Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/create-t3-app).
 
-**Update**: Severely rate limited Front-end ~~with unconnected API~~ demo: <https://gpt-demo.aaanh.app>
+## Public Demo <https://gpt-demo.aaanh.app>
 
-Production: <https://gpt.aaanh.app>
+- This is an 1:1 deployment of the private production application
+- API calls are severely limited to `4 rpm`
 
-Donate/Sponsor: <https://ko-fi.com/aaanh>
+## Private Production <https://gpt.aaanh.app>
+
+- Access automatically granted via One Time Password (OTP) to: `@microsoft.com, @nuance.com, @aaanh.{ca, com, app}, @hoanganh.dev`
+- Access granted through Github org membership: `github.com/{aaanh-labs, sac-research}`
+
 
 ## TODO
 
@@ -96,3 +101,7 @@ Donate/Sponsor: <https://ko-fi.com/aaanh>
 All types of contributions, e.g. suggestion, MR/PR, bug report, etc., are warmly welcomed.
 
 Please refer to [the CONTRIBUTE.md document](CONTRIBUTE.md) and [the Code of Conduct](CONDUCT.md) for more detailed guidelines.
+
+## Donate/Sponsor
+
+<https://ko-fi.com/aaanh>
