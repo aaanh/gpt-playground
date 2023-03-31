@@ -13,7 +13,7 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
 
 ## Private Production <https://gpt.aaanh.app>
 
-- Access automatically granted via One Time Password (OTP) to: `@microsoft.com, @nuance.com, @aaanh.{ca, com, app}, @hoanganh.dev`
+- Access automatically granted via One Time Password (OTP) to: `@microsoft.com, @nuance.com, and other private domains`
 - Access granted through Github org membership: `github.com/{aaanh-labs, sac-research}`
 
 
