@@ -17,11 +17,11 @@ const Footer: React.FC = () => {
             <p className="text-white mx-2">
               ⚠️ Internal uses, PoC, demos, not production.
             </p>
-            <p className="text-white mx-2">
+            {/* <p className="text-white mx-2">
               <a className="link-info hover:underline underline-offset-4" href="https://ko-fi.com/aaanh">
                 Sponsor this project 💖
               </a>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
