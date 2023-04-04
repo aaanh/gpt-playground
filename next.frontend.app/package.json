@@ -19,7 +19,8 @@
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.5",
     "remark-gfm": "^3.0.1",
-    "superjson": "1.9.1"
+    "superjson": "1.9.1",
+    "logrocket": "^3.0.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.5.1",
