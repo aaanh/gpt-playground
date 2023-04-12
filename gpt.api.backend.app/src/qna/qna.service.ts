@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQnaDto } from './dto/create-qna.dto';
 
 @Injectable()
 export class QnaService {
-  create(createQnaDto: CreateQnaDto) {
-    return 'This action adds a new qna';
-  }
-
   findAll() {
     return `This action returns all qna`;
   }
