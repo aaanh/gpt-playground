@@ -26,19 +26,6 @@ const MultiTurn: NextPage = () => {
   // Application
   const router = useRouter();
 
-  // Runtime hooks
-  // useEffect(() => {
-  //   const storedConversation = localStorage.getItem("conversation");
-  //   if (localStorage.getItem("prompt")) {
-  //     setInput(localStorage.getItem("prompt") || "");
-  //   }
-  //   if (storedConversation) {
-  //     if (Array.isArray(JSON.parse(storedConversation))) {
-  //       setConversation(JSON.parse(storedConversation));
-  //     }
-  //   }
-  // }, []);
-
   useEffect(() => {
     localStorage.setItem("user", input);
   }, [input]);
@@ -269,11 +256,39 @@ const MultiTurn: NextPage = () => {
             "\n```\n"}
         </ReactMarkdown>
         <br />
-        <div className="text-xl">Generated Response</div>
+        {/* <div className="text-xl">Generated Response</div>
         {result ? (
           <div className="overflow-scroll rounded bg-neutral-200 p-4">
             <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
               {`${result}`}
+            </ReactMarkdown>
+          </div>
+        ) : loading ? (
+          <div className="flex items-center justify-center space-x-2">
+            <img
+              width={32}
+              height={32}
+              className="bg-transparent"
+              src="/loader.gif"
+            ></img>
+            <div>Loading response...</div>
+          </div>
+        ) : null}
+        <br></br> */}
+        <div className="text-xl font-mono">Raw Response</div>
+        {result ? (
+          <div className="rounded bg-neutral-200">
+            <ReactMarkdown
+              className="break-word rounded bg-neutral-200 p-4"
+              remarkPlugins={[remarkGfm]}
+            >
+              {"```json\n" +
+                JSON.stringify(
+                  {
+                    response: `${result}`,
+                  }, null, 2
+                ) +
+                "\n```\n"}
             </ReactMarkdown>
           </div>
         ) : loading ? (
