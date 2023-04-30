@@ -107,4 +107,4 @@ Please refer to [the CONTRIBUTE.md document](CONTRIBUTE.md) and [the Code of Con
 
 ## Copyright materials
 
-⚠️ The [`aaanh`](/next.frontend.app/public/Logo.png) logo and the pseudonym aaanh is my trademark and subject to copyright laws.
+⚠️ The [`aaanh`](/next.frontend.app/public/logo-color-variant.png) logo and the pseudonym aaanh is my trademark and subject to copyright laws.
