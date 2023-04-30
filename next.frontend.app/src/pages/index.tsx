@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       <Head>
         <title>AAANH Labs</title>
         <meta name="description" content="AAANH Labs" />
-        <link rel="icon" href="/Logo.png" />
+        <link rel="icon" href="/logo-color-variant.png" />
       </Head>
 
       <div className="flex flex-col space-y-2 p-2 sm:p-0 justify-center items-center">

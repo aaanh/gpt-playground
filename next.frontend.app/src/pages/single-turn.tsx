@@ -105,7 +105,7 @@ const SingleTurn: NextPage = () => {
       <Head>
         <title>Single-Turn Prompt</title>
         <meta name="description" content="AAANH Labs" />
-        <link rel="icon" href="/Logo.png" />
+        <link rel="icon" href="/logo-color-variant.png" />
       </Head>
       <div className="w-full p-4 md:w-1/2">
         <h3 className="text-xl">Enter prompt</h3>

@@ -16,7 +16,6 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
 - Access automatically granted via One Time Password (OTP) to: `@microsoft.com, @nuance.com, and other private domains`
 - Access granted through Github org membership: `github.com/{aaanh-labs, sac-research}`
 
-
 ## TODO
 
 ### App Features
@@ -105,3 +104,7 @@ Please refer to [the CONTRIBUTE.md document](CONTRIBUTE.md) and [the Code of Con
 ## Donate/Sponsor
 
 <https://ko-fi.com/aaanh>
+
+## Copyright materials
+
+⚠️ The [`aaanh`](/next.frontend.app/public/Logo.png) logo and the pseudonym aaanh is my trademark and subject to copyright laws.
