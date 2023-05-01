@@ -6,7 +6,6 @@ import DefaultLayout from "~/layouts/DefaultLayout";
 
 
 const Home: NextPage = () => {
-  console.log(process.env.LOGROCKET_ID)
   return (
     <DefaultLayout>
       <Head>

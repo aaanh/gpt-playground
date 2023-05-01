@@ -23,15 +23,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const temperature = req.body.temperature || 1;
   const choices = 1;
 
-  // if (conversation.trim().length === 0) {
-  //   res.status(400).json({
-  //     error: {
-  //       message: "Please enter a valid prompt.",
-  //     },
-  //   });
-  //   return;
-  // }
-
   try {
     const completion = await openai.createChatCompletion({
       model: reqModel,

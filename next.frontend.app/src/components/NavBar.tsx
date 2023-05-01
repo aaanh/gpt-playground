@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Url } from 'url'
-import Branding from './Logo';
+import Logo from './Logo';
 import MyPersona, { MyPersonaNarrow } from './Persona';
 import { Menu, MenuTrigger, MenuPopover, MenuList, MenuItem } from '@fluentui/react-components';
 
@@ -25,7 +25,7 @@ function NavBar() {
   return (
     <nav className="bg-neutral-900 flex items-center space-x-4 absolute top-0 left-0 p-2 justify-between w-full">
       <div className='w-32 flex justify-start'>
-        <Branding></Branding>
+        <Logo></Logo>
       </div>
       <div className='flex space-x-3'>
         <NavBtn enabled={true} text="Single-Turn" href="/single-turn"></NavBtn>
