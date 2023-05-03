@@ -22,6 +22,12 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
   const reqModel: string = req.body.model || "gpt-4";
   const temperature = req.body.temperature || 1;
   const choices = 1;
+  const maxTokens = req.body.maxTokens || 1000;
+  const top_p = req.body.topP || 1;
+  const presencePenalty = req.body.presencePenalty || 0;
+  const frequencyPenalty = req.body.frequencyPenalty || 0;
+
+  // @TODO: Add support for logit_bias
 
   try {
     const completion = await openai.createChatCompletion({
@@ -29,6 +35,10 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       temperature: temperature,
       n: choices,
       messages: conversation,
+      max_tokens: maxTokens,
+      top_p: top_p,
+      presence_penalty: presencePenalty,
+      frequency_penalty: frequencyPenalty,
     });
     res
       .status(200)

@@ -21,6 +21,11 @@ const MultiTurn: NextPage = () => {
   // API Parameters
   const [model, setModel] = useState(0);
   const [temperature, setTemperature] = useState(1.0);
+  const [maxTokens, setMaxTokens] = useState(1000);
+  const [topP, setTopP] = useState(1.0);
+  const [frequencyPenalty, setFrequencyPenalty] = useState(0.0);
+  const [presencePenalty, setPresencePenalty] = useState(0.0);
+  // GPT Model Selection
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
 
   // Application
@@ -63,6 +68,7 @@ const MultiTurn: NextPage = () => {
           conversation: tmpConversation,
           model: gptModel[model],
           temperature: temperature,
+          max_tokens: maxTokens,
         }),
       });
 
@@ -99,7 +105,7 @@ const MultiTurn: NextPage = () => {
     e.preventDefault();
     setConversation([]);
     setInput("");
-  }
+  };
 
   // End of Function definitions
 
@@ -115,7 +121,7 @@ const MultiTurn: NextPage = () => {
           <summary className="font-bold">Conversation (scrollable)</summary>
           <div className="max-h-64 overflow-y-scroll rounded-md border p-2">
             {conversation.length <= 0 && (
-              <div className="text-md italic text-neutral-500 my-2">
+              <div className="text-md my-2 italic text-neutral-500">
                 💁‍♀️ There&apos;s nothing here. Yet.
               </div>
             )}
@@ -167,10 +173,10 @@ const MultiTurn: NextPage = () => {
             onChange={(e) => setInput(e.target.value)}
           ></textarea>
           <br></br>
-          <div className="flex flex-wrap flex-col space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
+          <div className="flex flex-col flex-wrap space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
             <button
               className={
-                "btn btn-success normal-case w-48 " +
+                "btn-success btn w-48 normal-case " +
                 (loading ? "btn-disabled" : "")
               }
               onClick={onSubmit}
@@ -195,21 +201,106 @@ const MultiTurn: NextPage = () => {
           </div>
         </form>
         {/*  */}
-        <h3 className="text-xl mt-4">Parameters</h3>
+        <h3 className="mt-4 text-xl">Parameters</h3>
+
+        {/*
+          presence_penalty: presencePenalty,
+          frequency_penalty: frequencyPenalty,
+        */}
+
         <div className="mt-4 flex w-full flex-wrap items-center space-y-2 xl:space-y-0 xl:space-x-2">
-          <div>
+          <div className="flex flex-wrap space-y-2">
+            <label className="input-group">
+              <span>Max Tokens</span>
+              <input
+                onChange={(e) => setMaxTokens(parseInt(e.target.value))}
+                step={100}
+                type="number"
+                min={100}
+                max={2000}
+                value={
+                  maxTokens > 2000 ? 2000 : maxTokens < 100 ? 100 : maxTokens
+                }
+                placeholder="1000"
+                className="input-bordered input"
+              ></input>
+            </label>
+
+            <label className="input-group">
+              <span>
+                <a
+                  className="text-blue-500 underline hover:font-semibold"
+                  href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p"
+                >
+                  Top P
+                </a>
+              </span>
+              <input
+                onChange={(e) => setTopP(parseFloat(e.target.value))}
+                step={0.1}
+                type="number"
+                min={0}
+                max={1}
+                value={topP > 1 ? 1 : topP < 0 ? 0 : topP}
+                placeholder="1.0"
+                className="input-bordered input"
+              />
+            </label>
+
+            <label className="input-group">
+              <span>
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty">
+                  Presence Penalty
+                </a>
+              </span>
+              <input
+                onChange={(e) => setPresencePenalty(parseFloat(e.target.value))}
+                step={0.1}
+                type="number"
+                min={0}
+                max={1}
+                value={
+                  presencePenalty > 1
+                    ? 1
+                    : presencePenalty < 0
+                    ? 0
+                    : presencePenalty
+                }
+                placeholder="1.0"
+                className="input-bordered input"
+              />
+            </label>
+
+            <label className="input-group">
+              <span>
+                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty">
+                  Frequency Penalty
+                </a>
+              </span>
+              <input
+                onChange={(e) =>
+                  setFrequencyPenalty(parseFloat(e.target.value))
+                }
+                step={0.1}
+                type="number"
+                min={0}
+                max={1}
+                value={
+                  frequencyPenalty > 1
+                    ? 1
+                    : frequencyPenalty < 0
+                    ? 0
+                    : frequencyPenalty
+                }
+                placeholder="1.0"
+                className="input-bordered input"
+              />
+            </label>
+
             <label className="input-group">
               <span>Temperature</span>
               <input
-                onChange={(e) =>
-                  setTemperature(
-                    parseFloat(e.target.value) > 2
-                      ? 2
-                      : parseFloat(e.target.value) < 0
-                        ? 0
-                        : parseFloat(e.target.value)
-                  )
-                }
+                onChange={(e) => setTemperature(parseFloat(e.target.value))}
                 step={0.1}
                 type="number"
                 min={0}
@@ -246,9 +337,13 @@ const MultiTurn: NextPage = () => {
           {"```json\n" +
             JSON.stringify(
               {
-                prompt: input,
-                model: gptModel[model],
+                max_tokens: maxTokens,
+                top_p: topP,
+                presence_penalty: presencePenalty,
+                frequency_penalty: frequencyPenalty,
                 temperature: temperature,
+                model: gptModel[model],
+                prompt: input,
               },
               null,
               2
@@ -275,7 +370,7 @@ const MultiTurn: NextPage = () => {
           </div>
         ) : null}
         <br></br> */}
-        <div className="text-xl font-mono">Raw Response</div>
+        <div className="font-mono text-xl">Raw Response</div>
         {result ? (
           <div className="rounded bg-neutral-200">
             <ReactMarkdown
@@ -286,7 +381,9 @@ const MultiTurn: NextPage = () => {
                 JSON.stringify(
                   {
                     response: `${result}`,
-                  }, null, 2
+                  },
+                  null,
+                  2
                 ) +
                 "\n```\n"}
             </ReactMarkdown>
