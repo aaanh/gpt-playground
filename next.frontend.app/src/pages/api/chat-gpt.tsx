@@ -16,8 +16,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  console.log(req.body);
-
   const conversation = req.body.conversation || "";
   const reqModel: string = req.body.model || "gpt-4";
   const temperature = req.body.temperature || 1;
@@ -57,4 +55,6 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       });
     }
   }
+
+  console.log(req.body);
 }

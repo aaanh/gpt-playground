@@ -21,7 +21,7 @@ const MultiTurn: NextPage = () => {
   // API Parameters
   const [model, setModel] = useState(0);
   const [temperature, setTemperature] = useState(1.0);
-  const [maxTokens, setMaxTokens] = useState(1000);
+  const [maxTokens, setMaxTokens] = useState(500);
   const [topP, setTopP] = useState(1.0);
   const [frequencyPenalty, setFrequencyPenalty] = useState(0.0);
   const [presencePenalty, setPresencePenalty] = useState(0.0);
@@ -69,6 +69,9 @@ const MultiTurn: NextPage = () => {
           model: gptModel[model],
           temperature: temperature,
           max_tokens: maxTokens,
+          top_p: topP,
+          frequency_penalty: frequencyPenalty,
+          presence_penalty: presencePenalty,
         }),
       });
 
@@ -105,6 +108,21 @@ const MultiTurn: NextPage = () => {
     e.preventDefault();
     setConversation([]);
     setInput("");
+  };
+
+  const handleExportConversation = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleImportConversation = (e: any) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+      const conversation = JSON.parse(event.target?.result as string);
+
+      setConversation(conversation);
+    };
   };
 
   // End of Function definitions
@@ -162,8 +180,6 @@ const MultiTurn: NextPage = () => {
         <br></br>
 
         {/* PROMPT ENTRY SECTION */}
-
-        <h3 className="text-xl">Enter chat message</h3>
         <form className="flex flex-col items-center md:items-start">
           <textarea
             className="textarea w-full resize-none border-blue-300 outline-none outline-1 focus:border-transparent focus:outline-blue-400"
@@ -201,15 +217,9 @@ const MultiTurn: NextPage = () => {
           </div>
         </form>
         {/*  */}
-        <h3 className="mt-4 text-xl">Parameters</h3>
-
-        {/*
-          presence_penalty: presencePenalty,
-          frequency_penalty: frequencyPenalty,
-        */}
-
-        <div className="mt-4 flex w-full flex-wrap items-center space-y-2 xl:space-y-0 xl:space-x-2">
-          <div className="flex flex-wrap space-y-2">
+        <h3 className="mt-4 text-xl font-bold">Parameters</h3>
+        <div className="mt-4 flex w-full flex-wrap items-center">
+          <div className="flex flex-wrap justify-between [&>*]:mb-2 [&>*]:w-48">
             <label className="input-group">
               <span>Max Tokens</span>
               <input
@@ -221,7 +231,7 @@ const MultiTurn: NextPage = () => {
                 value={
                   maxTokens > 2000 ? 2000 : maxTokens < 100 ? 100 : maxTokens
                 }
-                placeholder="1000"
+                placeholder="500"
                 className="input-bordered input"
               ></input>
             </label>
@@ -249,7 +259,10 @@ const MultiTurn: NextPage = () => {
 
             <label className="input-group">
               <span>
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty">
+                <a
+                  className="text-blue-500 underline hover:font-semibold"
+                  href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
+                >
                   Presence Penalty
                 </a>
               </span>
@@ -273,7 +286,10 @@ const MultiTurn: NextPage = () => {
 
             <label className="input-group">
               <span>
-                <a href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty">
+                <a
+                  className="text-blue-500 underline hover:font-semibold"
+                  href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
+                >
                   Frequency Penalty
                 </a>
               </span>
@@ -298,7 +314,14 @@ const MultiTurn: NextPage = () => {
             </label>
 
             <label className="input-group">
-              <span>Temperature</span>
+              <span>
+                <a
+                  className="text-blue-500 underline hover:font-semibold"
+                  href="https://platform.openai.com/docs/api-reference/edits/create#edits/create-temperature"
+                >
+                  Temperature
+                </a>
+              </span>
               <input
                 onChange={(e) => setTemperature(parseFloat(e.target.value))}
                 step={0.1}
@@ -312,24 +335,27 @@ const MultiTurn: NextPage = () => {
             </label>
           </div>
 
-          <select
-            tabIndex={0}
-            value={model}
-            onChange={(e) => setModel(parseInt(e.target.value))}
-            className="select-bordered select w-full max-w-xs"
-          >
-            <option value={0}>GPT-4 (default)</option>
-            <option value={1}>GPT-3.5</option>
-            <option disabled value={2}>
-              Davinci-003 (GPT-3)
-            </option>
-          </select>
+          <div>
+            <label>Select Model</label>
+            <select
+              tabIndex={0}
+              value={model}
+              onChange={(e) => setModel(parseInt(e.target.value))}
+              className="select-bordered select w-full max-w-xs"
+            >
+              <option value={0}>GPT-4 (default)</option>
+              <option value={1}>GPT-3.5</option>
+              <option disabled value={2}>
+                Davinci-003 (GPT-3)
+              </option>
+            </select>
+          </div>
         </div>
 
         {/* NERD SECTION */}
 
         <br />
-        <h2 className="text-xl">Request Body</h2>
+        <h2 className="text-xl font-bold">Request Body</h2>
         <ReactMarkdown
           className="break-word rounded bg-neutral-200 p-4"
           remarkPlugins={[remarkGfm]}
@@ -351,26 +377,8 @@ const MultiTurn: NextPage = () => {
             "\n```\n"}
         </ReactMarkdown>
         <br />
-        {/* <div className="text-xl">Generated Response</div>
-        {result ? (
-          <div className="overflow-scroll rounded bg-neutral-200 p-4">
-            <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
-              {`${result}`}
-            </ReactMarkdown>
-          </div>
-        ) : loading ? (
-          <div className="flex items-center justify-center space-x-2">
-            <img
-              width={32}
-              height={32}
-              className="bg-transparent"
-              src="/loader.gif"
-            ></img>
-            <div>Loading response...</div>
-          </div>
-        ) : null}
-        <br></br> */}
-        <div className="font-mono text-xl">Raw Response</div>
+
+        <div className="text-xl font-bold">Raw Response</div>
         {result ? (
           <div className="rounded bg-neutral-200">
             <ReactMarkdown
@@ -400,6 +408,26 @@ const MultiTurn: NextPage = () => {
           </div>
         ) : null}
         <br></br>
+
+        <div className="">
+          <h2 className="text-xl font-bold">Data IO</h2>
+          <div className="flex flex-col items-start space-y-2">
+            <input
+              onChange={handleImportConversation}
+              className="file-input-primary file-input normal-case"
+              type="file"
+              accept=".json"
+              name="Import conversation.json"
+            />
+
+            <button
+              onClick={handleExportConversation}
+              className="btn-outline btn normal-case"
+            >
+              Export conversation (.json)
+            </button>
+          </div>
+        </div>
       </div>
     </DefaultLayout>
   );
