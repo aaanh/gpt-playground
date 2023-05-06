@@ -414,15 +414,16 @@ const MultiTurn: NextPage = () => {
           <div className="flex flex-col items-start space-y-2">
             <input
               onChange={handleImportConversation}
-              className="file-input-primary file-input normal-case"
+              className="file-input file-input-primary file-input-disabled normal-case"
               type="file"
               accept=".json"
               name="Import conversation.json"
+              disabled={true}
             />
 
             <button
               onClick={handleExportConversation}
-              className="btn-outline btn normal-case"
+              className="btn-outline btn-disabled btn normal-case"
             >
               Export conversation (.json)
             </button>
