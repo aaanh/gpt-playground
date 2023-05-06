@@ -28,9 +28,9 @@ function NavBar() {
         <Logo></Logo>
       </div>
       <div className='flex space-x-3'>
-        <NavBtn enabled={true} text="Single-Turn" href="/single-turn"></NavBtn>
         <NavBtn enabled={true} text="Multi-Turn" href="/multi-turn"></NavBtn>
         <NavBtn enabled={true} text="Diffusion" href="/diffusion"></NavBtn>
+        <NavBtn enabled={true} text="Single-Turn" href="/single-turn"></NavBtn>
       </div>
       {/* <div className='hidden md:flex w-48 justify-end'>
         <MyPersona></MyPersona>
