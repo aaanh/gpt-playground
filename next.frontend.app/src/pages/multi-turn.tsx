@@ -218,8 +218,8 @@ const MultiTurn: NextPage = () => {
         </form>
         {/*  */}
         <h3 className="mt-4 text-xl font-bold">Parameters</h3>
-        <div className="mt-4 flex w-full flex-wrap items-center">
-          <div className="flex flex-wrap justify-between [&>*]:mb-2 [&>*]:w-48">
+        <div className="mt-4 flex w-full flex-wrap items-start flex-col">
+          <div className="flex flex-wrap [&>*]:w-48 [&>*]:mb-2 [&>*]:mr-4">
             <label className="input-group">
               <span>Max Tokens</span>
               <input
@@ -276,8 +276,8 @@ const MultiTurn: NextPage = () => {
                   presencePenalty > 1
                     ? 1
                     : presencePenalty < 0
-                    ? 0
-                    : presencePenalty
+                      ? 0
+                      : presencePenalty
                 }
                 placeholder="1.0"
                 className="input-bordered input"
@@ -305,8 +305,8 @@ const MultiTurn: NextPage = () => {
                   frequencyPenalty > 1
                     ? 1
                     : frequencyPenalty < 0
-                    ? 0
-                    : frequencyPenalty
+                      ? 0
+                      : frequencyPenalty
                 }
                 placeholder="1.0"
                 className="input-bordered input"
