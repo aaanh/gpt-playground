@@ -14,15 +14,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/logo-color-variant.png" />
       </Head>
 
-      <div className="flex flex-col space-y-2 p-2 sm:p-0 justify-center items-center">
-        <h1 className="text-6xl">
-          Welcome.
-        </h1>
-        <p className="text-lg">Select one of the demos below to get started.</p>
-        <div className="flex flex-col text-black">
-          <NavBtn enabled={true} text="Multi-Turn Chat" href="/multi-turn"></NavBtn>
-          <NavBtn enabled={true} text="Diffusion (WIP)" href="/diffusion"></NavBtn>
-          <NavBtn enabled={true} text="Single-Turn Q&A (Deprecated)" href="/single-turn"></NavBtn>
+      <div className="flex flex-col space-y-2 justify-center items-center">
+        <div className="p-4 text-center">
+          <h1 className="text-6xl">
+            Welcome.
+          </h1>
+          <p className="text-lg">Select one of the demos below to get started.</p>
+          <br></br>
+          <div className="flex flex-col text-black items-center space-y-2">
+            <NavBtn enabled={true} text="Chat" href="/multi-turn"></NavBtn>
+            <NavBtn enabled={true} text="Diffusion (WIP)" href="/diffusion"></NavBtn>
+          </div>
         </div>
       </div>
 
@@ -38,12 +40,14 @@ type NavBtnProps = {
 
 const NavBtn = (props: NavBtnProps) => {
   return (
-    <Link
-      className={"text-md text-black border-b-2 border-b-transparent transition-all ease-linear hover:border-b-black flex items-center my-2 " + (props.enabled ? "" : "pointer-events-none text-neutral-200")}
-      href={props.href}
-    >
-      {"> " + props.text}
-    </Link>
+    <div className="flex items-center btn btn-outline">
+      <Link
+        className={"text-md flex items-center " + (props.enabled ? "" : "pointer-events-none text-neutral-200")}
+        href={props.href}
+      >
+        {props.text}
+      </Link>
+    </div>
   );
 }
 

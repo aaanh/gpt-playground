@@ -217,196 +217,42 @@ const MultiTurn: NextPage = () => {
           </div>
         </form>
         {/*  */}
-        <h3 className="mt-4 text-xl font-bold">Parameters</h3>
-        <div className="mt-4 flex w-full flex-wrap items-start flex-col">
-          <div className="flex flex-wrap [&>*]:w-48 [&>*]:mb-2 [&>*]:mr-4">
-            <label className="input-group">
-              <span>Max Tokens</span>
-              <input
-                onChange={(e) => setMaxTokens(parseInt(e.target.value))}
-                step={100}
-                type="number"
-                min={100}
-                max={2000}
-                value={
-                  maxTokens > 2000 ? 2000 : maxTokens < 100 ? 100 : maxTokens
-                }
-                placeholder="500"
-                className="input-bordered input"
-              ></input>
-            </label>
 
-            <label className="input-group">
-              <span>
-                <a
-                  className="text-blue-500 underline hover:font-semibold"
-                  href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p"
-                >
-                  Top P
-                </a>
-              </span>
-              <input
-                onChange={(e) => setTopP(parseFloat(e.target.value))}
-                step={0.1}
-                type="number"
-                min={0}
-                max={1}
-                value={topP > 1 ? 1 : topP < 0 ? 0 : topP}
-                placeholder="1.0"
-                className="input-bordered input"
-              />
-            </label>
-
-            <label className="input-group">
-              <span>
-                <a
-                  className="text-blue-500 underline hover:font-semibold"
-                  href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
-                >
-                  Presence Penalty
-                </a>
-              </span>
-              <input
-                onChange={(e) => setPresencePenalty(parseFloat(e.target.value))}
-                step={0.1}
-                type="number"
-                min={0}
-                max={1}
-                value={
-                  presencePenalty > 1
-                    ? 1
-                    : presencePenalty < 0
-                      ? 0
-                      : presencePenalty
-                }
-                placeholder="1.0"
-                className="input-bordered input"
-              />
-            </label>
-
-            <label className="input-group">
-              <span>
-                <a
-                  className="text-blue-500 underline hover:font-semibold"
-                  href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
-                >
-                  Frequency Penalty
-                </a>
-              </span>
-              <input
-                onChange={(e) =>
-                  setFrequencyPenalty(parseFloat(e.target.value))
-                }
-                step={0.1}
-                type="number"
-                min={0}
-                max={1}
-                value={
-                  frequencyPenalty > 1
-                    ? 1
-                    : frequencyPenalty < 0
-                      ? 0
-                      : frequencyPenalty
-                }
-                placeholder="1.0"
-                className="input-bordered input"
-              />
-            </label>
-
-            <label className="input-group">
-              <span>
-                <a
-                  className="text-blue-500 underline hover:font-semibold"
-                  href="https://platform.openai.com/docs/api-reference/edits/create#edits/create-temperature"
-                >
-                  Temperature
-                </a>
-              </span>
-              <input
-                onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                step={0.1}
-                type="number"
-                min={0}
-                max={2}
-                value={temperature > 2 ? 2 : temperature < 0 ? 0 : temperature}
-                placeholder="1.0"
-                className="input-bordered input"
-              />
-            </label>
-          </div>
-
-          <div>
-            <label>Select Model</label>
-            <select
-              tabIndex={0}
-              value={model}
-              onChange={(e) => setModel(parseInt(e.target.value))}
-              className="select-bordered select w-full max-w-xs"
-            >
-              <option value={0}>GPT-4 (default)</option>
-              <option value={1}>GPT-3.5</option>
-              <option disabled value={2}>
-                Davinci-003 (GPT-3)
-              </option>
-            </select>
-          </div>
-        </div>
-
-        {/* NERD SECTION */}
+        <ParametersInputComponent
+          maxTokens={maxTokens}
+          setMaxTokens={setMaxTokens}
+          topP={topP}
+          setTopP={setTopP}
+          presencePenalty={presencePenalty}
+          setPresencePenalty={setPresencePenalty}
+          frequencyPenalty={frequencyPenalty}
+          setFrequencyPenalty={setFrequencyPenalty}
+          temperature={temperature}
+          setTemperature={setTemperature}
+          model={model}
+          setModel={setModel}
+        ></ParametersInputComponent>
 
         <br />
-        <h2 className="text-xl font-bold">Request Body</h2>
-        <ReactMarkdown
-          className="break-word rounded bg-neutral-200 p-4"
-          remarkPlugins={[remarkGfm]}
-        >
-          {"```json\n" +
-            JSON.stringify(
-              {
-                max_tokens: maxTokens,
-                top_p: topP,
-                presence_penalty: presencePenalty,
-                frequency_penalty: frequencyPenalty,
-                temperature: temperature,
-                model: gptModel[model],
-                prompt: input,
-              },
-              null,
-              2
-            ) +
-            "\n```\n"}
-        </ReactMarkdown>
+
+        <RequestBodyComponent
+          input={input}
+          maxTokens={maxTokens}
+          topP={topP}
+          presencePenalty={presencePenalty}
+          frequencyPenalty={frequencyPenalty}
+          temperature={temperature}
+          model={model}
+          gptModel={gptModel}
+        ></RequestBodyComponent>
+
         <br />
 
-        <div className="text-xl font-bold">Raw Response</div>
-        {result ? (
-          <div className="rounded bg-neutral-200">
-            <ReactMarkdown
-              className="break-word rounded bg-neutral-200 p-4"
-              remarkPlugins={[remarkGfm]}
-            >
-              {"```json\n" +
-                JSON.stringify(
-                  {
-                    response: `${result}`,
-                  },
-                  null,
-                  2
-                ) +
-                "\n```\n"}
-            </ReactMarkdown>
-          </div>
-        ) : loading ? (
-          <div className="flex items-center justify-center space-x-2">
-            <img
-              width={32}
-              height={32}
-              className="bg-transparent"
-              src="/loader.gif"
-            ></img>
-            <div>Loading response...</div>
-          </div>
-        ) : null}
+        <RawResponseComponent
+          result={result}
+          loading={loading}
+        ></RawResponseComponent>
+
         <br></br>
 
         <div className="">
@@ -433,5 +279,240 @@ const MultiTurn: NextPage = () => {
     </DefaultLayout>
   );
 };
+
+interface IParametersInputComponentProps {
+  maxTokens: number;
+  setMaxTokens: (maxTokens: number) => void;
+  topP: number;
+  setTopP: (topP: number) => void;
+  presencePenalty: number;
+  setPresencePenalty: (presencePenalty: number) => void;
+  frequencyPenalty: number;
+  setFrequencyPenalty: (frequencyPenalty: number) => void;
+  temperature: number;
+  setTemperature: (temperature: number) => void;
+  model: number;
+  setModel: (model: number) => void;
+}
+
+
+const ParametersInputComponent = (props: IParametersInputComponentProps) => {
+  return (
+    <>
+      <h3 className="mt-4 text-xl font-bold">Parameters</h3>
+      <div className="mt-4 flex w-full flex-wrap items-start flex-col">
+        <div className="flex flex-wrap [&>*]:w-48 [&>*]:mb-2 [&>*]:mr-2">
+          <label className="input-group">
+            <span>Max Tokens</span>
+            <input
+              onChange={(e) => props.setMaxTokens(parseInt(e.target.value))}
+              step={100}
+              type="number"
+              min={100}
+              max={2000}
+              value={
+                props.maxTokens > 2000 ? 2000 : props.maxTokens < 100 ? 100 : props.maxTokens
+              }
+              placeholder="500"
+              className="input-bordered input"
+            ></input>
+          </label>
+
+          <label className="input-group">
+            <span>
+              <a
+                className="text-blue-500 underline hover:font-semibold"
+                href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p"
+              >
+                Top P
+              </a>
+            </span>
+            <input
+              onChange={(e) => props.setTopP(parseFloat(e.target.value))}
+              step={0.1}
+              type="number"
+              min={0}
+              max={1}
+              value={props.topP > 1 ? 1 : props.topP < 0 ? 0 : props.topP}
+              placeholder="1.0"
+              className="input-bordered input"
+            />
+          </label>
+
+          <label className="input-group">
+            <span>
+              <a
+                className="text-blue-500 underline hover:font-semibold"
+                href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
+              >
+                Presence Penalty
+              </a>
+            </span>
+            <input
+              onChange={(e) => props.setPresencePenalty(parseFloat(e.target.value))}
+              step={0.1}
+              type="number"
+              min={0}
+              max={1}
+              value={
+                props.presencePenalty > 1
+                  ? 1
+                  : props.presencePenalty < 0
+                    ? 0
+                    : props.presencePenalty
+              }
+              placeholder="1.0"
+              className="input-bordered input"
+            />
+          </label>
+
+          <label className="input-group">
+            <span>
+              <a
+                className="text-blue-500 underline hover:font-semibold"
+                href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
+              >
+                Frequency Penalty
+              </a>
+            </span>
+            <input
+              onChange={(e) =>
+                props.setFrequencyPenalty(parseFloat(e.target.value))
+              }
+              step={0.1}
+              type="number"
+              min={0}
+              max={1}
+              value={
+                props.frequencyPenalty > 1
+                  ? 1
+                  : props.frequencyPenalty < 0
+                    ? 0
+                    : props.frequencyPenalty
+              }
+              placeholder="1.0"
+              className="input-bordered input"
+            />
+          </label>
+
+          <label className="input-group">
+            <span>
+              <a
+                className="text-blue-500 underline hover:font-semibold"
+                href="https://platform.openai.com/docs/api-reference/edits/create#edits/create-temperature"
+              >
+                Temperature
+              </a>
+            </span>
+            <input
+              onChange={(e) => props.setTemperature(parseFloat(e.target.value))}
+              step={0.1}
+              type="number"
+              min={0}
+              max={2}
+              value={props.temperature > 2 ? 2 : props.temperature < 0 ? 0 : props.temperature}
+              placeholder="1.0"
+              className="input-bordered input"
+            />
+          </label>
+        </div>
+
+        <div>
+          <label>Select Model</label>
+          <select
+            tabIndex={0}
+            value={props.model}
+            onChange={(e) => props.setModel(parseInt(e.target.value))}
+            className="select-bordered select w-full max-w-xs"
+          >
+            <option value={0}>GPT-4 (default)</option>
+            <option value={1}>GPT-3.5</option>
+            <option disabled value={2}>
+              Davinci-003 (GPT-3)
+            </option>
+          </select>
+        </div>
+      </div>
+    </>
+  )
+}
+
+interface IRequestBodyComponentProps {
+  maxTokens: number;
+  topP: number;
+  presencePenalty: number;
+  frequencyPenalty: number;
+  input: string;
+  temperature: number;
+  model: number;
+  gptModel: string[];
+}
+
+const RequestBodyComponent = (props: IRequestBodyComponentProps) => {
+  return <>
+    <h2 className="text-xl font-bold">Request Body</h2>
+    <ReactMarkdown
+      className="break-word rounded bg-neutral-200 p-4"
+      remarkPlugins={[remarkGfm]}
+    >
+      {"```json\n" +
+        JSON.stringify(
+          {
+            max_tokens: props.maxTokens,
+            top_p: props.topP,
+            presence_penalty: props.presencePenalty,
+            frequency_penalty: props.frequencyPenalty,
+            temperature: props.temperature,
+            model: props.gptModel[props.model],
+            prompt: props.input,
+          },
+          null,
+          2
+        ) +
+        "\n```\n"}
+    </ReactMarkdown>
+  </>
+}
+
+interface IRawResponseComponentProps {
+  loading: boolean;
+  result: string;
+}
+
+const RawResponseComponent = (props: IRawResponseComponentProps) => {
+  return (
+    <>
+      <div className="text-xl font-bold">Raw Response</div>
+      {props.result ? (
+        <div className="rounded bg-neutral-200">
+          <ReactMarkdown
+            className="break-word rounded bg-neutral-200 p-4"
+            remarkPlugins={[remarkGfm]}
+          >
+            {"```json\n" +
+              JSON.stringify(
+                {
+                  response: `${props.result}`,
+                },
+                null,
+                2
+              ) +
+              "\n```\n"}
+          </ReactMarkdown>
+        </div>
+      ) : props.loading ? (
+        <div className="flex items-center justify-center space-x-2">
+          <img
+            width={32}
+            height={32}
+            className="bg-transparent"
+            src="/loader.gif"
+          ></img>
+          <div>Loading response...</div>
+        </div>
+      ) : null}
+    </>
+  )
+}
 
 export default MultiTurn;
