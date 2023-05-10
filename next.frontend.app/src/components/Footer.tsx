@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
               ⚗️ AAANH LABS
             </span>
             <p className="text-sm">&copy; {new Date().getFullYear()} <a href="https://aaanh.com">Anh H Nguyen</a>. All Rights Reserved.</p>
-            <p className="text-sm"><a className="link-info hover:underline underline-offset-4" href="https://github.com/aaanh/gpt-test-bench.git">Source code on Github</a></p>
+            <p className="text-sm"><a className="link-info hover:underline underline-offset-4" href="https://github.com/aaanh/gpt-playground.git">Source code on Github</a></p>
           </div>
           <div className="w-full md:w-auto text-center md:text-right">
             <p className="text-white mx-2">
