@@ -25,6 +25,7 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
   - [ ] Emit error events
   - [ ] Implement session-based LogRocket
 - [x] Cache prompts and responses in local storage
+- [x] Import and export conversation
 - [x] Multi-turn implementation (similar to ChatGPT)
 - [ ] Diffusion implementation (DALL-E 2)
 
