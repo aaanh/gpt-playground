@@ -232,6 +232,27 @@ const MultiTurn: NextPage = () => {
         </form>
         {/*  */}
 
+        <div className="mt-8">
+          <h2 className="text-xl font-bold">Data IO</h2>
+          <div className="flex flex-col items-start space-y-2">
+            <input
+              onChange={handleImportConversation}
+              className="file-input file-input-secondary normal-case"
+              type="file"
+              accept=".json"
+              name="Import conversation.json"
+              // disabled={true}
+            />
+
+            <button
+              onClick={handleExportConversation}
+              className="btn-outline btn normal-case"
+            >
+              Export conversation (.json)
+            </button>
+          </div>
+        </div>
+
         <ParametersInputComponent
           maxTokens={maxTokens}
           setMaxTokens={setMaxTokens}
@@ -268,27 +289,6 @@ const MultiTurn: NextPage = () => {
         ></RawResponseComponent>
 
         <br></br>
-
-        <div className="">
-          <h2 className="text-xl font-bold">Data IO</h2>
-          <div className="flex flex-col items-start space-y-2">
-            <input
-              onChange={handleImportConversation}
-              className="file-input file-input-primary normal-case"
-              type="file"
-              accept=".json"
-              name="Import conversation.json"
-              // disabled={true}
-            />
-
-            <button
-              onClick={handleExportConversation}
-              className="btn-outline btn normal-case"
-            >
-              Export conversation (.json)
-            </button>
-          </div>
-        </div>
       </div>
     </DefaultLayout>
   );
@@ -451,9 +451,11 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
             className="select-bordered select w-full max-w-xs"
           >
             <option value={0}>GPT-4 (default)</option>
-            <option value={1}>GPT-3.5</option>
+            <option disabled value={1}>
+              GPT-3.5 (deprecated)
+            </option>
             <option disabled value={2}>
-              Davinci-003 (GPT-3)
+              Davinci-003 (GPT-3) (deprecated)
             </option>
           </select>
         </div>
@@ -509,7 +511,7 @@ interface IRawResponseComponentProps {
 const RawResponseComponent = (props: IRawResponseComponentProps) => {
   return (
     <>
-      <div className="text-xl font-bold">Raw Response</div>
+      <div className="flex text-xl font-bold">Raw Response</div>
       {props.result ? (
         <div className="rounded bg-neutral-200">
           <ReactMarkdown
@@ -528,7 +530,7 @@ const RawResponseComponent = (props: IRawResponseComponentProps) => {
           </ReactMarkdown>
         </div>
       ) : props.loading ? (
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center space-x-2 bg-neutral-200 p-4">
           <img
             width={32}
             height={32}
@@ -537,7 +539,9 @@ const RawResponseComponent = (props: IRawResponseComponentProps) => {
           ></img>
           <div>Loading response...</div>
         </div>
-      ) : null}
+      ) : (
+        <div className="rounded bg-neutral-200 p-4">Nothing here yet!</div>
+      )}
     </>
   );
 };
