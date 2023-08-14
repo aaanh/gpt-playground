@@ -6,6 +6,12 @@ It uses the `openai` npm package.
 
 Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/create-t3-app).
 
+## Deploy to Vercel using this neat little button that I can't seem to customize the styling
+
+> ⚠️ Attention! You must have access to an OpenAI API account and an UpStash account and a Vercel account.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faaanh%2Fgpt-playground&env=OPENAI_API_KEY,UPSTASH_REDIS_REST_TOKEN,UPSTASH_REDIS_REST_URL,RATE_LIMIT_DURATION,RATE_LIMIT_REQUESTS)
+
 ## Public Demo <https://gpt-demo.aaanh.app>
 
 - This is an 1:1 deployment of the private production application
@@ -61,6 +67,7 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
 > Note: The steps below apply for Microsoft Azure cloud platform but the principles essentially can be applied on any cloud platforms.
 >
 > Another note: Currently, the end-to-end build and deploy process only works on AMDx64 platforms. ARM support to be investigated.
+>
 
 ### Local Cluster
 
