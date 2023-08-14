@@ -112,17 +112,31 @@ const MultiTurn: NextPage = () => {
 
   const handleExportConversation = (e: any) => {
     e.preventDefault();
+    const dateTime = new Date().toISOString();
+    if (localStorage.conversation) {
+      const conversation = localStorage.conversation;
+      const blob = new Blob([conversation], { type: "application/json" });
+      const href = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = href;
+      link.download = `conversation-${dateTime}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert("No conversation to export.");
+    }
   };
 
   const handleImportConversation = (e: any) => {
+    e.preventDefault();
     const file = e.target.files[0];
     const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const conversation = JSON.parse(event.target?.result as string);
-
+    reader.onload = function () {
+      const conversation = JSON.parse(reader.result as string);
       setConversation(conversation);
     };
+    reader.readAsText(file);
   };
 
   // End of Function definitions
@@ -260,16 +274,16 @@ const MultiTurn: NextPage = () => {
           <div className="flex flex-col items-start space-y-2">
             <input
               onChange={handleImportConversation}
-              className="file-input file-input-primary file-input-disabled normal-case"
+              className="file-input file-input-primary normal-case"
               type="file"
               accept=".json"
               name="Import conversation.json"
-              disabled={true}
+              // disabled={true}
             />
 
             <button
               onClick={handleExportConversation}
-              className="btn-outline btn-disabled btn normal-case"
+              className="btn-outline btn normal-case"
             >
               Export conversation (.json)
             </button>
@@ -295,13 +309,12 @@ interface IParametersInputComponentProps {
   setModel: (model: number) => void;
 }
 
-
 const ParametersInputComponent = (props: IParametersInputComponentProps) => {
   return (
     <>
       <h3 className="mt-4 text-xl font-bold">Parameters</h3>
-      <div className="mt-4 flex w-full flex-wrap items-start flex-col">
-        <div className="flex flex-wrap [&>*]:w-48 [&>*]:mb-2 [&>*]:mr-2">
+      <div className="mt-4 flex w-full flex-col flex-wrap items-start">
+        <div className="flex flex-wrap [&>*]:mb-2 [&>*]:mr-2 [&>*]:w-48">
           <label className="input-group">
             <span>Max Tokens</span>
             <input
@@ -311,7 +324,11 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
               min={100}
               max={2000}
               value={
-                props.maxTokens > 2000 ? 2000 : props.maxTokens < 100 ? 100 : props.maxTokens
+                props.maxTokens > 2000
+                  ? 2000
+                  : props.maxTokens < 100
+                  ? 100
+                  : props.maxTokens
               }
               placeholder="500"
               className="input-bordered input"
@@ -349,7 +366,9 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
               </a>
             </span>
             <input
-              onChange={(e) => props.setPresencePenalty(parseFloat(e.target.value))}
+              onChange={(e) =>
+                props.setPresencePenalty(parseFloat(e.target.value))
+              }
               step={0.1}
               type="number"
               min={0}
@@ -358,8 +377,8 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
                 props.presencePenalty > 1
                   ? 1
                   : props.presencePenalty < 0
-                    ? 0
-                    : props.presencePenalty
+                  ? 0
+                  : props.presencePenalty
               }
               placeholder="1.0"
               className="input-bordered input"
@@ -387,8 +406,8 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
                 props.frequencyPenalty > 1
                   ? 1
                   : props.frequencyPenalty < 0
-                    ? 0
-                    : props.frequencyPenalty
+                  ? 0
+                  : props.frequencyPenalty
               }
               placeholder="1.0"
               className="input-bordered input"
@@ -410,7 +429,13 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
               type="number"
               min={0}
               max={2}
-              value={props.temperature > 2 ? 2 : props.temperature < 0 ? 0 : props.temperature}
+              value={
+                props.temperature > 2
+                  ? 2
+                  : props.temperature < 0
+                  ? 0
+                  : props.temperature
+              }
               placeholder="1.0"
               className="input-bordered input"
             />
@@ -434,8 +459,8 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 interface IRequestBodyComponentProps {
   maxTokens: number;
@@ -449,30 +474,32 @@ interface IRequestBodyComponentProps {
 }
 
 const RequestBodyComponent = (props: IRequestBodyComponentProps) => {
-  return <>
-    <h2 className="text-xl font-bold">Request Body</h2>
-    <ReactMarkdown
-      className="break-word rounded bg-neutral-200 p-4"
-      remarkPlugins={[remarkGfm]}
-    >
-      {"```json\n" +
-        JSON.stringify(
-          {
-            max_tokens: props.maxTokens,
-            top_p: props.topP,
-            presence_penalty: props.presencePenalty,
-            frequency_penalty: props.frequencyPenalty,
-            temperature: props.temperature,
-            model: props.gptModel[props.model],
-            prompt: props.input,
-          },
-          null,
-          2
-        ) +
-        "\n```\n"}
-    </ReactMarkdown>
-  </>
-}
+  return (
+    <>
+      <h2 className="text-xl font-bold">Request Body</h2>
+      <ReactMarkdown
+        className="break-word rounded bg-neutral-200 p-4"
+        remarkPlugins={[remarkGfm]}
+      >
+        {"```json\n" +
+          JSON.stringify(
+            {
+              max_tokens: props.maxTokens,
+              top_p: props.topP,
+              presence_penalty: props.presencePenalty,
+              frequency_penalty: props.frequencyPenalty,
+              temperature: props.temperature,
+              model: props.gptModel[props.model],
+              prompt: props.input,
+            },
+            null,
+            2
+          ) +
+          "\n```\n"}
+      </ReactMarkdown>
+    </>
+  );
+};
 
 interface IRawResponseComponentProps {
   loading: boolean;
@@ -512,7 +539,7 @@ const RawResponseComponent = (props: IRawResponseComponentProps) => {
         </div>
       ) : null}
     </>
-  )
-}
+  );
+};
 
 export default MultiTurn;
