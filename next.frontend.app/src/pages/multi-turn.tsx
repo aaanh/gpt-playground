@@ -25,6 +25,7 @@ const MultiTurn: NextPage = () => {
   const [topP, setTopP] = useState(1.0);
   const [frequencyPenalty, setFrequencyPenalty] = useState(0.0);
   const [presencePenalty, setPresencePenalty] = useState(0.0);
+
   // GPT Model Selection
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
 
@@ -149,6 +150,10 @@ const MultiTurn: NextPage = () => {
         <link rel="icon" href="/logo-color-variant.png" />
       </Head>
       <div className="w-full p-4 md:w-1/2">
+        <div className="alert alert-info">
+          <span>Deprecated internal demo server due to costs. Inflation is real 🥲.</span>
+        </div>
+        <br></br>
         <details className="" open>
           <summary className="font-bold">Conversation (scrollable)</summary>
           <div className="max-h-64 overflow-y-scroll rounded-md border p-2">
@@ -231,13 +236,18 @@ const MultiTurn: NextPage = () => {
           </div>
         </form>
         {/*  */}
+        <br></br>
+        <div className="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>Due to Vercel Edge function rate limiting, requests/responds that require more than 10 seconds of execution time or 30 seconds of initial response time will return a rate limiting error message from Vercel server.</span>
+        </div>
 
         <div className="mt-8">
           <h2 className="text-xl font-bold">Data IO</h2>
           <div className="flex flex-col items-start space-y-2">
             <input
               onChange={handleImportConversation}
-              className="file-input file-input-secondary normal-case"
+              className="file-input-secondary file-input normal-case"
               type="file"
               accept=".json"
               name="Import conversation.json"

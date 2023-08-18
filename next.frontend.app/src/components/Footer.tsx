@@ -16,9 +16,6 @@ const Footer: React.FC = () => {
             <p className="text-white mx-2">
               GPT models and responses are provided through paid OpenAI&apos;s API.
             </p>
-            <p className="text-white mx-2">
-              ⚠️ This is a public demo. Authorized users should use <a className="text-sky-400 hover:underline underline-offset-4" href="https://gpt.aaanh.app">gpt.aaanh.app</a>
-            </p>
           </div>
         </div>
       </div>

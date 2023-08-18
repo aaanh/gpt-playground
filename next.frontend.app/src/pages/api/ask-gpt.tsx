@@ -9,6 +9,12 @@ const openai = new OpenAIApi(configuration);
 
 
 export default async function (req: NextApiRequest, res: NextApiResponse) {
+  // return a 404 response for all requests
+  if (true) {
+    res.status(403).json({ error: { message: "Forbidden API route."}});
+    return res;
+  }
+
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
