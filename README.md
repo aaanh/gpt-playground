@@ -1,4 +1,4 @@
-# A Simple GPT Web Client
+# A Simple GPT Web Client [https://gpt.aaanh.app](https://gpt.aaanh.app)
 
 Just a web interface for sending HTTP requests to the paid GPT API.
 
@@ -11,16 +11,6 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
 > ⚠️ Attention! You must have access to an OpenAI API account and an UpStash account and a Vercel account.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faaanh%2Fgpt-playground&env=OPENAI_API_KEY,UPSTASH_REDIS_REST_TOKEN,UPSTASH_REDIS_REST_URL,RATE_LIMIT_DURATION,RATE_LIMIT_REQUESTS)
-
-## Public Demo <https://gpt-demo.aaanh.app>
-
-- This is an 1:1 deployment of the private production application
-- API calls are severely limited to `4 rpm`
-
-## Private Production <https://gpt.aaanh.app>
-
-- Access automatically granted via One Time Password (OTP) to: `@microsoft.com, @nuance.com, and other private domains`
-- Access granted through Github org membership: `github.com/{aaanh-labs, sac-research}`
 
 ## TODO
 
