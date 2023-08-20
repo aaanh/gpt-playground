@@ -1,7 +1,7 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { Url } from "url";
+import { type Url } from "url";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
 
@@ -40,14 +40,14 @@ type NavBtnProps = {
 
 const NavBtn = (props: NavBtnProps) => {
   return (
-    <div className="flex items-center btn btn-outline">
+
       <Link
-        className={"text-md flex items-center " + (props.enabled ? "" : "pointer-events-none text-neutral-200")}
+        className={"btn btn-outline text-md flex items-center " + (props.enabled ? "" : "pointer-events-none text-neutral-200")}
         href={props.href}
       >
         {props.text}
       </Link>
-    </div>
+
   );
 }
 
