@@ -7,10 +7,10 @@ interface IConversationImportExportComponentProps {
 const ConversationImportExportComponent = (props: IConversationImportExportComponentProps) => {
   return <div className="mt-8">
           <h2 className="text-xl font-bold">Data IO</h2>
-          <div className="flex flex-col items-start space-y-2">
+          <div className="flex flex-col items-start space-y-2 max-w-xs">
             <input
               onChange={props.handleImportConversation}
-              className="file-input-secondary file-input normal-case"
+              className="file-input normal-case w-full file-input-bordered"
               type="file"
               accept=".json"
               name="Import conversation.json"
