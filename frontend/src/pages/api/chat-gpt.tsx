@@ -1,4 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable import/no-anonymous-default-export */
+import type { NextApiRequest, NextApiResponse } from "next";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
@@ -55,6 +57,4 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       });
     }
   }
-
-  console.log(req.body);
 }

@@ -1,12 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { ReactMarkdown } from "react-markdown/lib/react-markdown";
-import remarkGfm from "remark-gfm";
 import DefaultLayout from "~/layouts/DefaultLayout";
 
-type ConversationTurn = {
+import ConversationComponent from "~/components/Chat/Conversation";
+import ConversationImportExportComponent from "~/components/Chat/ConversationImportExport";
+import RawResponseComponent from "~/components/Chat/RawResponse";
+import ParametersInputComponent from "~/components/Chat/ParametersInput";
+import RequestBodyComponent from "~/components/Chat/RequestBody";
+import PromptEntry from "~/components/Chat/PromptEntry";
+
+export type ConversationTurn = {
   role: string | "user" | "agent";
   content: string;
 };
@@ -154,87 +160,11 @@ const MultiTurn: NextPage = () => {
           <span>Deprecated internal demo server due to costs. Inflation is real 🥲.</span>
         </div>
         <br></br>
-        <details className="" open>
-          <summary className="font-bold">Conversation (scrollable)</summary>
-          <div className="max-h-64 overflow-y-scroll rounded-md border p-2">
-            {conversation.length <= 0 && (
-              <div className="text-md my-2 italic text-neutral-500">
-                💁‍♀️ There&apos;s nothing here. Yet.
-              </div>
-            )}
-            {conversation.map((item, index) => (
-              <div
-                key={index}
-                className="my-2 flex flex-col border-b-2 border-dotted"
-              >
-                {index % 2 === 0 && (
-                  <div className="my-2 flex w-full flex-col items-end">
-                    <div className="max-w-lg font-bold capitalize">
-                      {item.role}
-                    </div>
-                    <div className="max-w-xl rounded-lg bg-blue-300 p-2">
-                      {item.content}
-                    </div>
-                  </div>
-                )}
-                {index % 2 !== 0 && (
-                  <div className="my-2 flex w-full flex-col items-start">
-                    <div className="max-w-sm font-bold capitalize">
-                      {item.role}
-                    </div>
-                    <div className="max-w-xl rounded-lg bg-neutral-300 p-2">
-                      <ReactMarkdown
-                        className="markdown"
-                        remarkPlugins={[remarkGfm]}
-                      >
-                        {item.content}
-                      </ReactMarkdown>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </details>
+        <ConversationComponent conversation={conversation}></ConversationComponent>
         <br></br>
 
         {/* PROMPT ENTRY SECTION */}
-        <form className="flex flex-col items-center md:items-start">
-          <textarea
-            className="textarea w-full resize-none border-blue-300 outline-none outline-1 focus:border-transparent focus:outline-blue-400"
-            name="prompt"
-            placeholder="Enter your dankest question here..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          ></textarea>
-          <br></br>
-          <div className="flex flex-col flex-wrap space-y-2 lg:flex-row lg:space-x-2 lg:space-y-0">
-            <button
-              className={
-                "btn-success btn w-48 normal-case " +
-                (loading ? "btn-disabled" : "")
-              }
-              onClick={onSubmit}
-            >
-              Submit
-            </button>
-            <button
-              className={"btn-outline btn-warning btn normal-case"}
-              onClick={(e) => {
-                e.preventDefault();
-                setInput("");
-              }}
-            >
-              Clear Input
-            </button>
-            <button
-              className="btn-outline btn-error btn float-right normal-case"
-              onClick={(e) => clearConversation(e)}
-            >
-              Reset Conversation
-            </button>
-          </div>
-        </form>
+        <PromptEntry onSubmit={onSubmit} clearConversation={clearConversation} setInput={setInput} input={input} loading={loading}></PromptEntry>
         {/*  */}
         <br></br>
         <div className="alert">
@@ -242,26 +172,7 @@ const MultiTurn: NextPage = () => {
           <span>Due to Vercel Edge function rate limiting, requests/responds that require more than 10 seconds of execution time or 30 seconds of initial response time will return a rate limiting error message from Vercel server.</span>
         </div>
 
-        <div className="mt-8">
-          <h2 className="text-xl font-bold">Data IO</h2>
-          <div className="flex flex-col items-start space-y-2">
-            <input
-              onChange={handleImportConversation}
-              className="file-input-secondary file-input normal-case"
-              type="file"
-              accept=".json"
-              name="Import conversation.json"
-              // disabled={true}
-            />
-
-            <button
-              onClick={handleExportConversation}
-              className="btn-outline btn normal-case"
-            >
-              Export conversation (.json)
-            </button>
-          </div>
-        </div>
+        <ConversationImportExportComponent handleImportConversation={handleImportConversation} handleExportConversation={handleExportConversation}></ConversationImportExportComponent>
 
         <ParametersInputComponent
           maxTokens={maxTokens}
@@ -301,258 +212,6 @@ const MultiTurn: NextPage = () => {
         <br></br>
       </div>
     </DefaultLayout>
-  );
-};
-
-interface IParametersInputComponentProps {
-  maxTokens: number;
-  setMaxTokens: (maxTokens: number) => void;
-  topP: number;
-  setTopP: (topP: number) => void;
-  presencePenalty: number;
-  setPresencePenalty: (presencePenalty: number) => void;
-  frequencyPenalty: number;
-  setFrequencyPenalty: (frequencyPenalty: number) => void;
-  temperature: number;
-  setTemperature: (temperature: number) => void;
-  model: number;
-  setModel: (model: number) => void;
-}
-
-const ParametersInputComponent = (props: IParametersInputComponentProps) => {
-  return (
-    <>
-      <h3 className="mt-4 text-xl font-bold">Parameters</h3>
-      <div className="mt-4 flex w-full flex-col flex-wrap items-start">
-        <div className="flex flex-wrap [&>*]:mb-2 [&>*]:mr-2 [&>*]:w-48">
-          <label className="input-group">
-            <span>Max Tokens</span>
-            <input
-              onChange={(e) => props.setMaxTokens(parseInt(e.target.value))}
-              step={100}
-              type="number"
-              min={100}
-              max={2000}
-              value={
-                props.maxTokens > 2000
-                  ? 2000
-                  : props.maxTokens < 100
-                  ? 100
-                  : props.maxTokens
-              }
-              placeholder="500"
-              className="input-bordered input"
-            ></input>
-          </label>
-
-          <label className="input-group">
-            <span>
-              <a
-                className="text-blue-500 underline hover:font-semibold"
-                href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p"
-              >
-                Top P
-              </a>
-            </span>
-            <input
-              onChange={(e) => props.setTopP(parseFloat(e.target.value))}
-              step={0.1}
-              type="number"
-              min={0}
-              max={1}
-              value={props.topP > 1 ? 1 : props.topP < 0 ? 0 : props.topP}
-              placeholder="1.0"
-              className="input-bordered input"
-            />
-          </label>
-
-          <label className="input-group">
-            <span>
-              <a
-                className="text-blue-500 underline hover:font-semibold"
-                href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
-              >
-                Presence Penalty
-              </a>
-            </span>
-            <input
-              onChange={(e) =>
-                props.setPresencePenalty(parseFloat(e.target.value))
-              }
-              step={0.1}
-              type="number"
-              min={0}
-              max={1}
-              value={
-                props.presencePenalty > 1
-                  ? 1
-                  : props.presencePenalty < 0
-                  ? 0
-                  : props.presencePenalty
-              }
-              placeholder="1.0"
-              className="input-bordered input"
-            />
-          </label>
-
-          <label className="input-group">
-            <span>
-              <a
-                className="text-blue-500 underline hover:font-semibold"
-                href="https://platform.openai.com/docs/api-reference/chat/create#chat/create-presence_penalty"
-              >
-                Frequency Penalty
-              </a>
-            </span>
-            <input
-              onChange={(e) =>
-                props.setFrequencyPenalty(parseFloat(e.target.value))
-              }
-              step={0.1}
-              type="number"
-              min={0}
-              max={1}
-              value={
-                props.frequencyPenalty > 1
-                  ? 1
-                  : props.frequencyPenalty < 0
-                  ? 0
-                  : props.frequencyPenalty
-              }
-              placeholder="1.0"
-              className="input-bordered input"
-            />
-          </label>
-
-          <label className="input-group">
-            <span>
-              <a
-                className="text-blue-500 underline hover:font-semibold"
-                href="https://platform.openai.com/docs/api-reference/edits/create#edits/create-temperature"
-              >
-                Temperature
-              </a>
-            </span>
-            <input
-              onChange={(e) => props.setTemperature(parseFloat(e.target.value))}
-              step={0.1}
-              type="number"
-              min={0}
-              max={2}
-              value={
-                props.temperature > 2
-                  ? 2
-                  : props.temperature < 0
-                  ? 0
-                  : props.temperature
-              }
-              placeholder="1.0"
-              className="input-bordered input"
-            />
-          </label>
-        </div>
-
-        <div>
-          <label>Select Model</label>
-          <select
-            tabIndex={0}
-            value={props.model}
-            onChange={(e) => props.setModel(parseInt(e.target.value))}
-            className="select-bordered select w-full max-w-xs"
-          >
-            <option value={0}>GPT-4 (default)</option>
-            <option disabled value={1}>
-              GPT-3.5 (deprecated)
-            </option>
-            <option disabled value={2}>
-              Davinci-003 (GPT-3) (deprecated)
-            </option>
-          </select>
-        </div>
-      </div>
-    </>
-  );
-};
-
-interface IRequestBodyComponentProps {
-  maxTokens: number;
-  topP: number;
-  presencePenalty: number;
-  frequencyPenalty: number;
-  input: string;
-  temperature: number;
-  model: number;
-  gptModel: string[];
-}
-
-const RequestBodyComponent = (props: IRequestBodyComponentProps) => {
-  return (
-    <>
-      <h2 className="text-xl font-bold">Request Body</h2>
-      <ReactMarkdown
-        className="break-word rounded bg-neutral-200 p-4"
-        remarkPlugins={[remarkGfm]}
-      >
-        {"```json\n" +
-          JSON.stringify(
-            {
-              max_tokens: props.maxTokens,
-              top_p: props.topP,
-              presence_penalty: props.presencePenalty,
-              frequency_penalty: props.frequencyPenalty,
-              temperature: props.temperature,
-              model: props.gptModel[props.model],
-              prompt: props.input,
-            },
-            null,
-            2
-          ) +
-          "\n```\n"}
-      </ReactMarkdown>
-    </>
-  );
-};
-
-interface IRawResponseComponentProps {
-  loading: boolean;
-  result: string;
-}
-
-const RawResponseComponent = (props: IRawResponseComponentProps) => {
-  return (
-    <>
-      <div className="flex text-xl font-bold">Raw Response</div>
-      {props.result ? (
-        <div className="rounded bg-neutral-200">
-          <ReactMarkdown
-            className="break-word rounded bg-neutral-200 p-4"
-            remarkPlugins={[remarkGfm]}
-          >
-            {"```json\n" +
-              JSON.stringify(
-                {
-                  response: `${props.result}`,
-                },
-                null,
-                2
-              ) +
-              "\n```\n"}
-          </ReactMarkdown>
-        </div>
-      ) : props.loading ? (
-        <div className="flex items-center justify-center space-x-2 bg-neutral-200 p-4">
-          <img
-            width={32}
-            height={32}
-            className="bg-transparent"
-            src="/loader.gif"
-          ></img>
-          <div>Loading response...</div>
-        </div>
-      ) : (
-        <div className="rounded bg-neutral-200 p-4">Nothing here yet!</div>
-      )}
-    </>
   );
 };
 
