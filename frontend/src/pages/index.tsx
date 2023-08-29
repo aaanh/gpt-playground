@@ -23,7 +23,7 @@ const Home: NextPage = () => {
           <br></br>
           <div className="flex flex-col text-black items-center space-y-2">
             <NavBtn enabled={true} text="Chat" href="/multi-turn"></NavBtn>
-            <NavBtn enabled={true} text="Diffusion (WIP)" href="/diffusion"></NavBtn>
+            {/* <NavBtn enabled={true} text="Diffusion (WIP)" href="/diffusion"></NavBtn> */}
           </div>
         </div>
       </div>
