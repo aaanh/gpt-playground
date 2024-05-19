@@ -32,8 +32,6 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
   npm run dev
   ```
 
-<iframe src="https://link.excalidraw.com/readonly/QUecUYbc1u4f7HsoU2Rv?darkMode=true" width="100%" height="100%" style="border: none;"></iframe>
-
 ## Deployment
 
 This repository can be forked as-is and deployed to Vercel.
