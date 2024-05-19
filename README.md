@@ -12,24 +12,6 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faaanh%2Fgpt-playground&env=OPENAI_API_KEY,UPSTASH_REDIS_REST_TOKEN,UPSTASH_REDIS_REST_URL,RATE_LIMIT_DURATION,RATE_LIMIT_REQUESTS)
 
-## TODO
-
-### App Features
-
-- [ ] Application telemetry (Kafka or Cassandra)
-  - [ ] Emit request events with opaque body
-  - [ ] Emit error events
-  - [ ] Implement session-based LogRocket
-- [x] Cache prompts and responses in local storage
-- [x] Import and export conversation
-- [x] Multi-turn implementation (similar to ChatGPT)
-- [ ] Diffusion implementation (DALL-E 2)
-
-### DevOps
-
-- [ ] ConfigMap to export `.env` variables into the deployment
-- [ ] Migrate from Linode bare-metal to AKS
-
 ## Usage
 
 - Install dependencies
@@ -54,44 +36,9 @@ Web application is bootstrapped using [create-t3-app](https://github.com/t3-oss/
 
 ## Deployment
 
-> Note: The steps below apply for Microsoft Azure cloud platform but the principles essentially can be applied on any cloud platforms.
->
-> Another note: Currently, the end-to-end build and deploy process only works on AMDx64 platforms. ARM support to be investigated.
->
+This repository can be forked as-is and deployed to Vercel.
 
-### Local Cluster
-
-#### Prerequisites
-
-- Docker Desktop with Kubernetes enabled
-- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-  - Private ACR created
-  - Service Principal with acrPull role for that ACR
-  - Have a Docker image of the frontend application built and pushed to the private ACR
-
-#### Step by step
-
-- Create k8s secret in local cluster. E.g. `acr-secret`
-  ```sh
-  kubectl create secret docker-registry acr-secret --docker-server=my-private-cr.azurecr.io --docker-username=service-principal-application-id --docker-password=service-principal-client-secret
-  ```
-- Reference the k8s secret in the deployment manifest spec
-  ```yaml
-  # ...
-  container:
-  # ...
-  imagePullSecrets:
-    - name: acr-secret
-  ```
-- Deploy the application
-  ```
-  kubectl apply -f k8s/gpt-frontend.yaml
-  ```
-- Navigate to `localhost:3000`
-
-### AKS
-
-- TBA
+Remember to add your API key to the Vercel project environment variables.
 
 ## Contributing
 
