@@ -13,6 +13,12 @@ jobs:
     name: Build and push container image
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
       - name: Check out repository code 🛎️
         uses: actions/checkout@v4
