@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
-import DefaultLayout from "~/layouts/DefaultLayout";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 type HistoryItem = {
   prompt: string;
@@ -22,7 +22,6 @@ const SingleTurn: NextPage = () => {
   const [model, setModel] = useState(0);
   const [temperature, setTemperature] = useState(1.0);
   const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
-
 
   // Application
   const router = useRouter();
@@ -42,10 +41,10 @@ const SingleTurn: NextPage = () => {
 
   useEffect(() => {
     localStorage.setItem("prompt", inputPrompt);
-  }, [inputPrompt])
+  }, [inputPrompt]);
 
   useEffect(() => {
-    localStorage.setItem('history', JSON.stringify(history));
+    localStorage.setItem("history", JSON.stringify(history));
   }, [history]);
 
   // Function definitions
@@ -70,11 +69,11 @@ const SingleTurn: NextPage = () => {
       localStorage.setItem("prompt", inputPrompt);
       const data = await response.json();
 
-      setLoading(false)
+      setLoading(false);
 
       if (response.status === 429) {
-        router.push("/ratelimited")
-        throw (new Error(`${response.status}: Too Many Requests`))
+        router.push("/ratelimited");
+        throw new Error(`${response.status}: Too Many Requests`);
       } else if (response.status !== 200) {
         throw (
           data.error ||
@@ -86,7 +85,10 @@ const SingleTurn: NextPage = () => {
       const updatedResult = data.result.replace(regex, "<br>");
 
       setResult(updatedResult);
-      setHistory([...history, { prompt: inputPrompt, response: updatedResult }]);
+      setHistory([
+        ...history,
+        { prompt: inputPrompt, response: updatedResult },
+      ]);
     } catch (error: any) {
       console.error(error);
       alert(error.message);
@@ -114,14 +116,22 @@ const SingleTurn: NextPage = () => {
             <label className="input-group">
               <span>Temperature</span>
               <input
-                onChange={(e) => setTemperature(parseFloat(e.target.value) > 2 ? 2 : parseFloat(e.target.value) < 0 ? 0 : parseFloat(e.target.value))}
+                onChange={(e) =>
+                  setTemperature(
+                    parseFloat(e.target.value) > 2
+                      ? 2
+                      : parseFloat(e.target.value) < 0
+                      ? 0
+                      : parseFloat(e.target.value)
+                  )
+                }
                 step={0.1}
                 type="number"
                 min={0}
                 max={2}
                 value={temperature > 2 ? 2 : temperature < 0 ? 0 : temperature}
                 placeholder="1.0"
-                className="input-bordered input"
+                className="input input-bordered"
               />
             </label>
           </div>
@@ -130,17 +140,19 @@ const SingleTurn: NextPage = () => {
             tabIndex={0}
             value={model}
             onChange={(e) => setModel(parseInt(e.target.value))}
-            className="select-bordered select w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
           >
             <option value={0}>GPT-4 (default)</option>
             <option value={1}>GPT-3.5</option>
-            <option disabled value={2}>Davinci-003 (GPT-3)</option>
+            <option disabled value={2}>
+              Davinci-003 (GPT-3)
+            </option>
           </select>
         </div>
         <br />
         <form className="flex flex-col items-center md:items-start">
           <textarea
-            className="border-blue-300 focus:border-transparent focus:outline-blue-400 outline-1 outline-none textarea w-full resize-none"
+            className="textarea w-full resize-none border-blue-300 outline-none outline-1 focus:border-transparent focus:outline-blue-400"
             name="prompt"
             placeholder="Enter your dankest question here..."
             value={inputPrompt}
@@ -148,10 +160,22 @@ const SingleTurn: NextPage = () => {
           ></textarea>
           <br></br>
           <div className="flex flex-wrap space-x-2">
-            <button className={"btn btn-success btn-outline normal-case " + (loading ? "btn-disabled" : "")} onClick={onSubmit}>
+            <button
+              className={
+                "btn btn-outline btn-success normal-case " +
+                (loading ? "btn-disabled" : "")
+              }
+              onClick={onSubmit}
+            >
               Submit
             </button>
-            <button className={"btn btn-outline btn-error normal-case"} onClick={(e) => { e.preventDefault(); setInputPrompt("") }}>
+            <button
+              className={"btn btn-outline btn-error normal-case"}
+              onClick={(e) => {
+                e.preventDefault();
+                setInputPrompt("");
+              }}
+            >
               Clear
             </button>
           </div>
@@ -159,51 +183,82 @@ const SingleTurn: NextPage = () => {
         <br />
 
         <h2 className="text-xl">Request Body</h2>
-        <ReactMarkdown className="break-word p-4 rounded bg-neutral-200" remarkPlugins={[remarkGfm]}>{"```json\n" + JSON.stringify({ prompt: inputPrompt, model: gptModel[model], temperature: temperature }, null, 2) + "\n```\n"}</ReactMarkdown>
+        <ReactMarkdown
+          className="break-word rounded bg-neutral-200 p-4"
+          remarkPlugins={[remarkGfm]}
+        >
+          {"```json\n" +
+            JSON.stringify(
+              {
+                prompt: inputPrompt,
+                model: gptModel[model],
+                temperature: temperature,
+              },
+              null,
+              2
+            ) +
+            "\n```\n"}
+        </ReactMarkdown>
 
         <br />
         <div className="text-xl">Generated Response</div>
         {result ? (
-          <div className="rounded bg-neutral-200 p-4 overflow-scroll">
+          <div className="overflow-scroll rounded bg-neutral-200 p-4">
             <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
               {`${result}`}
             </ReactMarkdown>
           </div>
-        ) : loading ? <div className="flex space-x-2 justify-center items-center">
-          <img width={32} height={32} className="bg-transparent" src="/loader.gif"></img>
-          <div>Loading response...</div>
-        </div> : null}
+        ) : loading ? (
+          <div className="flex items-center justify-center space-x-2">
+            <img
+              width={32}
+              height={32}
+              className="bg-transparent"
+              src="/loader.gif"
+            ></img>
+            <div>Loading response...</div>
+          </div>
+        ) : null}
         <br />
 
         <details className="">
-          <summary className="font-bold">
-            History (scrollable)
-          </summary>
-          <div className="max-h-64 overflow-y-scroll border p-2 rounded-md">
-            {history.length <= 0 && <div className="text-xl text-neutral-500 italic">💁‍♀️ There&apos;s nothing here. Yet.</div>}
-            {history.map((item, index) =>
-              <div key={index} className="flex flex-col my-2 border-b-2 border-dotted">
-                <div className="my-2 w-full flex-col flex items-end">
-                  <div className="font-bold max-w-lg">Prompt</div>
-                  <div className="bg-blue-300 max-w-xl p-2 rounded-lg">
+          <summary className="font-bold">History (scrollable)</summary>
+          <div className="max-h-64 overflow-y-scroll rounded-md border p-2">
+            {history.length <= 0 && (
+              <div className="text-xl italic text-neutral-500">
+                💁‍♀️ There&apos;s nothing here. Yet.
+              </div>
+            )}
+            {history.map((item, index) => (
+              <div
+                key={index}
+                className="my-2 flex flex-col border-b-2 border-dotted"
+              >
+                <div className="my-2 flex w-full flex-col items-end">
+                  <div className="max-w-lg font-bold">Prompt</div>
+                  <div className="max-w-xl rounded-lg bg-blue-300 p-2">
                     {item.prompt}
                   </div>
                 </div>
-                <div className="my-2 w-full flex-col flex items-start">
-                  <div className="font-bold max-w-sm">Response</div>
-                  <div className="bg-neutral-300 max-w-xl p-2 rounded-lg">
+                <div className="my-2 flex w-full flex-col items-start">
+                  <div className="max-w-sm font-bold">Response</div>
+                  <div className="max-w-xl rounded-lg bg-neutral-300 p-2">
                     {item.response}
                   </div>
                 </div>
               </div>
-            )}
+            ))}
           </div>
         </details>
         <br></br>
-        <button className="btn btn-info normal-case float-right" onClick={clearHistory}>Clear History</button>
+        <button
+          className="btn btn-info float-right normal-case"
+          onClick={clearHistory}
+        >
+          Clear History
+        </button>
       </div>
     </DefaultLayout>
-
   );
 };
 

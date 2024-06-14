@@ -35,7 +35,7 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
                   : props.maxTokens
               }
               placeholder="500"
-              className="input-bordered input"
+              className="input input-bordered"
             ></input>
           </label>
 
@@ -56,7 +56,7 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
               max={1}
               value={props.topP > 1 ? 1 : props.topP < 0 ? 0 : props.topP}
               placeholder="1.0"
-              className="input-bordered input"
+              className="input input-bordered"
             />
           </label>
 
@@ -85,7 +85,7 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
                   : props.presencePenalty
               }
               placeholder="1.0"
-              className="input-bordered input"
+              className="input input-bordered"
             />
           </label>
 
@@ -114,7 +114,7 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
                   : props.frequencyPenalty
               }
               placeholder="1.0"
-              className="input-bordered input"
+              className="input input-bordered"
             />
           </label>
 
@@ -141,7 +141,7 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
                   : props.temperature
               }
               placeholder="1.0"
-              className="input-bordered input"
+              className="input input-bordered"
             />
           </label>
         </div>
@@ -152,15 +152,9 @@ const ParametersInputComponent = (props: IParametersInputComponentProps) => {
             tabIndex={0}
             value={props.model}
             onChange={(e) => props.setModel(parseInt(e.target.value))}
-            className="select-bordered select w-full max-w-xs"
+            className="select select-bordered w-full max-w-xs"
           >
-            <option value={0}>GPT-4 (default)</option>
-            <option disabled value={1}>
-              GPT-3.5 (deprecated)
-            </option>
-            <option disabled value={2}>
-              Davinci-003 (GPT-3) (deprecated)
-            </option>
+            <option value={0}>GPT-4o (default)</option>
           </select>
         </div>
       </div>

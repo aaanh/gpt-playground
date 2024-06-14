@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import DefaultLayout from "~/layouts/DefaultLayout";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 const Diffusion: NextPage = () => {
   return (
@@ -11,13 +11,13 @@ const Diffusion: NextPage = () => {
       <Head>
         <title>Diffusion</title>
       </Head>
-      <div className="items-center justify-center flex">
-        <div className="px-20 py-16 bg-neutral-900 items-center justify-center flex">
+      <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center bg-neutral-900 px-20 py-16">
           <h1 className="text-4xl text-white">Coming soon!</h1>
         </div>
       </div>
     </DefaultLayout>
-  )
-}
+  );
+};
 
-export default Diffusion
+export default Diffusion;

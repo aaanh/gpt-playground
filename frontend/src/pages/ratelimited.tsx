@@ -1,19 +1,31 @@
 import { type NextPage } from "next";
 import Link from "next/link";
-import DefaultLayout from "~/layouts/DefaultLayout";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
 const Ratelimited: NextPage = (props: any) => {
+  return (
+    <DefaultLayout>
+      <div className="flex w-full flex-col items-center justify-center p-2">
+        <h1 className="text-4xl font-bold">Error 429: Too many requests.</h1>
+        <br />
 
-  return <DefaultLayout>
-    <div className="w-full flex flex-col justify-center items-center p-2">
-      <h1 className="text-4xl font-bold">Error 429: Too many requests.</h1>
-      <br />
-      
-      <p>Your IP address exceeded current rule: {props.numOfRequests} requests per {props.duration}.</p>
-      <p><Link className="text-blue-500 hover:font-bold hover:underline underline-offset-4" href="/single-turn">Go back</Link> and try again later.</p>
-    </div>
-  </DefaultLayout>
-}
+        <p>
+          Your IP address exceeded current rule: {props.numOfRequests} requests
+          per {props.duration}.
+        </p>
+        <p>
+          <Link
+            className="text-blue-500 underline-offset-4 hover:font-bold hover:underline"
+            href="/single-turn"
+          >
+            Go back
+          </Link>{" "}
+          and try again later.
+        </p>
+      </div>
+    </DefaultLayout>
+  );
+};
 
 export async function getServerSideProps() {
   return {
@@ -24,4 +36,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default Ratelimited
+export default Ratelimited;

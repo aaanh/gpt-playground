@@ -3,14 +3,14 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import DefaultLayout from "~/layouts/DefaultLayout";
+import DefaultLayout from "@/layouts/DefaultLayout";
 
-import ConversationComponent from "~/components/Chat/Conversation";
-import ConversationImportExportComponent from "~/components/Chat/ConversationImportExport";
-import RawResponseComponent from "~/components/Chat/RawResponse";
-import ParametersInputComponent from "~/components/Chat/ParametersInput";
-import RequestBodyComponent from "~/components/Chat/RequestBody";
-import PromptEntry from "~/components/Chat/PromptEntry";
+import ConversationComponent from "@/components/Chat/Conversation";
+import ConversationImportExportComponent from "@/components/Chat/ConversationImportExport";
+import RawResponseComponent from "@/components/Chat/RawResponse";
+import ParametersInputComponent from "@/components/Chat/ParametersInput";
+import RequestBodyComponent from "@/components/Chat/RequestBody";
+import PromptEntry from "@/components/Chat/PromptEntry";
 
 export type ConversationTurn = {
   role: string | "user" | "agent";
@@ -33,7 +33,7 @@ const MultiTurn: NextPage = () => {
   const [presencePenalty, setPresencePenalty] = useState(0.0);
 
   // GPT Model Selection
-  const gptModel = ["gpt-4", "gpt-3.5-turbo", "text-davinci-003"];
+  const gptModel = ["gpt-4o"];
 
   // Application
   const router = useRouter();
@@ -156,23 +156,24 @@ const MultiTurn: NextPage = () => {
         <link rel="icon" href="/logo-color-variant.png" />
       </Head>
       <div className="w-full p-4 md:w-1/2">
-        <div className="alert alert-info">
-          <span>Deprecated internal demo server due to costs. Inflation is real 🥲.</span>
-        </div>
-        <br></br>
-        <ConversationComponent conversation={conversation}></ConversationComponent>
+        <ConversationComponent
+          conversation={conversation}
+        ></ConversationComponent>
         <br></br>
 
         {/* PROMPT ENTRY SECTION */}
-        <PromptEntry onSubmit={onSubmit} clearConversation={clearConversation} setInput={setInput} input={input} loading={loading}></PromptEntry>
-        {/*  */}
-        <br></br>
-        <div className="alert">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <span>Due to Vercel Edge function rate limiting, requests/responds that require more than 10 seconds of execution time or 30 seconds of initial response time will return a rate limiting error message from Vercel server.</span>
-        </div>
+        <PromptEntry
+          onSubmit={onSubmit}
+          clearConversation={clearConversation}
+          setInput={setInput}
+          input={input}
+          loading={loading}
+        ></PromptEntry>
 
-        <ConversationImportExportComponent handleImportConversation={handleImportConversation} handleExportConversation={handleExportConversation}></ConversationImportExportComponent>
+        <ConversationImportExportComponent
+          handleImportConversation={handleImportConversation}
+          handleExportConversation={handleExportConversation}
+        ></ConversationImportExportComponent>
 
         <ParametersInputComponent
           maxTokens={maxTokens}
